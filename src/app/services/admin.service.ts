@@ -19,18 +19,18 @@ export class AdminService {
   }
 
   post(route: any, data: any): Observable<any> {
-    return this.http.post<any>('http://13.232.224.31/api' + route, data);
+    return this.http.post<any>('http://13.232.19.32/api' + route, data);
   }
 
   get(route: any): Observable<any> {
-    return this.http.get<any>('http://13.232.224.31/api' + route);
+    return this.http.get<any>('http://13.232.19.32/api' + route);
   }
 
   getCustomerData(route: string, id: string): Observable<any> {
-    return this.http.get<any>(`http://13.232.224.31/api${route}?id=${id}`);
+    return this.http.get<any>(`http://13.232.19.32/api${route}?id=${id}`);
   }
   getJuristicData(route: string, id: string): Observable<any> {
-    return this.http.get<any>(`http://13.232.224.31/api${route}?id=${id}`);
+    return this.http.get<any>(`http://13.232.19.32/api${route}?id=${id}`);
   }
   
 

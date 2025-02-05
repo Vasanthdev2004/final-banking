@@ -1,0 +1,354 @@
+<div class="m-4" *ngIf="!showForm">
+    <!-- <h6 class="text-left">Juristic Person</h6> -->
+    <br />
+    <p-table #dt2 [value]="filteredProducts" responsiveLayout="stack" [globalFilterFields]="['fullName','customer_id','std_class','std_sec','status']" [breakpoint]="'960px'"
+        [tableStyle]="{'min-width': '50rem'}" class="p-table">
+        <ng-template pTemplate="caption">
+          <div class="row">
+              <div class="col-md-3">
+                  <span class="p-input-icon-left mx-2 mb-2 w-100">
+                      <i class="pi pi-search"></i>
+                      <input pInputText type="text"
+                          (input)="dt2.filterGlobal($event.target.value, 'contains')"
+                          placeholder="Search" class="w-100 ps-5" />
+                  </span>
+              </div>
+          </div>
+      </ng-template>
+      <ng-template pTemplate="header" let-columns>
+        <tr>
+          <th>Juristic Id</th>
+          <th>Customer Name</th>
+          <th>Mobile Number</th>
+          <th>Email</th>
+          <th>Company</th>
+          <th>Designation</th>
+          <th>Actions</th>
+          <!-- New column for actions -->
+        </tr>
+      </ng-template>
+      <ng-template
+        pTemplate="body"
+        let-product
+        let-columns="columns"
+        let-rowIndex="rowIndex"
+      >
+        <tr>
+          <td (click)="cusData(product.customer_id)">
+            <span class="p-column-title">Customer Id</span>{{ product.customer_id }}
+          </td>
+          <td (click)="cusData(product.customer_id)">
+            <span class="p-column-title">Customer Name</span
+            >{{ product.fullName }}
+          </td>
+          <td (click)="cusData(product.customer_id)">
+            <span class="p-column-title">Mobile Number</span
+            >{{ product.mobileNumber }}
+          </td>
+          <td (click)="cusData(product.customer_id)"><span class="p-column-title">Email</span>{{ product.email }}</td>
+          <td>
+            <span class="p-column-title">Company</span>{{ product.companyName }}
+          </td>
+          <td (click)="cusData(product.customer_id)">
+            <span class="p-column-title">Designation</span
+            >{{ product.designation }}
+          </td>
+          <td>
+            <button (click)="openAddJuristicPersonDialog(product.customer_id)" class="btn btn-success">
+                Apply Loan
+              </button>
+            <p-confirmDialog
+              header="Confirmation"
+              icon="pi pi-exclamation-triangle"
+              acceptLabel="Yes"
+              rejectLabel="No"
+            ></p-confirmDialog>
+          </td>
+        </tr>
+      </ng-template>
+    </p-table>
+  </div>
+  
+  <div class="m-4" *ngIf="showForm">
+    <!-- <div class="d-flex">
+      <div>
+        <h6 class="text-left">Create New Juristic Person</h6>
+      </div>
+      <div class="ms-5">
+        <button (click)="backToList()" class="btn btn-warning">
+          Back to List
+        </button>
+      </div>
+    </div> -->
+    <div class="back-wrapper">
+      <i class="pi pi-chevron-left back-icon" (click)="back()" style="color: slateblue"></i>
+      <p>Back</p>
+  </div>
+    <p-tabView [(activeIndex)]="activeIndex">
+  
+      <p-tabPanel
+        header="Loan Details"
+        [disabled]="!this.loanDetails.valid"
+      >
+        <h6 class="text-left">Professional Information</h6>
+        <form [formGroup]="loanDetails">
+            <div class="row">
+              <div class="col-sm-12 col-md-6 mb-3">
+                <label class="form-label"
+                  >Loan Type <span class="important-star">*</span></label
+                >
+      
+                <select formControlName="loanType" class="form-control">
+                  <option value="">-- Select Loan Type --</option>
+                  <option value="personal">Personal Loan</option>
+                  <option value="home">Home Loan</option>
+                  <option value="car">Car Loan</option>
+                  <option value="education">Education Loan</option>
+                  <option value="business">Business Loan</option>
+                  <option value="gold">Gold Loan</option>
+                  <option value="credit-card">Credit Card Loan</option>
+                </select>
+                <div
+                  *ngIf="
+                    loanDetails.get('loanType')?.invalid &&
+                    (loan_submitted ||
+                      loanDetails.get('loanType')?.dirty ||
+                      loanDetails.get('loanType')?.touched)
+                  "
+                  class="error"
+                >
+                  <small *ngIf="loanDetails.get('loanType')?.errors?.['required']"
+                    >Loan Type is required.</small
+                  >
+                </div>
+              </div>
+      
+              <div class="col-sm-12 col-md-6 mb-3">
+                <label class="form-label"
+                  >Loan Tenure <span class="important-star">*</span></label
+                >
+      
+                <select formControlName="loanTenure" class="form-control">
+                  <option value="">-- Select Loan Tenure --</option>
+                  <option value="6-months">6 Months</option>
+                  <option value="1-year">1 Year</option>
+                  <option value="2-years">2 Years</option>
+                  <option value="3-years">3 Years</option>
+                  <option value="5-years">5 Years</option>
+                  <option value="10-years">10 Years</option>
+                  <option value="15-years">15 Years</option>
+                  <option value="20-years">20 Years</option>
+                  <option value="more">More than 20 Years</option>
+                </select>
+                <div
+                  *ngIf="
+                    loanDetails.get('loanTenure')?.invalid &&
+                    (loan_submitted ||
+                      loanDetails.get('loanTenure')?.dirty ||
+                      loanDetails.get('loanTenure')?.touched)
+                  "
+                  class="error"
+                >
+                  <small *ngIf="loanDetails.get('loanTenure')?.errors?.['required']"
+                    >Loan Tenure is required.</small
+                  >
+                </div>
+              </div>
+            </div>
+      
+            <div class="row">
+              <div class="col-sm-12 col-md-6 mb-3">
+                <label class="form-label"
+                  >Loan Amount Requested <span class="important-star">*</span></label
+                >
+      
+                <select formControlName="loanAmount" class="form-control">
+                  <option value="">-- Select Loan Type --</option>
+                  <option value="50000">₹50,000</option>
+                  <option value="100000">₹1,00,000</option>
+                  <option value="200000">₹2,00,000</option>
+                  <option value="500000">₹5,00,000</option>
+                  <option value="1000000">₹10,00,000</option>
+                  <option value="more">More than ₹10,00,000</option>
+                </select>
+                <div
+                  *ngIf="
+                    loanDetails.get('loanAmount')?.invalid &&
+                    (loan_submitted ||
+                      loanDetails.get('loanAmount')?.dirty ||
+                      loanDetails.get('loanAmount')?.touched)
+                  "
+                  class="error"
+                >
+                  <small *ngIf="loanDetails.get('loanAmount')?.errors?.['required']"
+                    >Loan Amount is required.</small
+                  >
+                </div>
+              </div>
+              <div class="col-sm-12 col-md-6 mb-3">
+                <label class="form-label"
+                  >Purpose of Loan <span class="important-star">*</span></label
+                >
+      
+                <select formControlName="purpose" class="form-control">
+                  <option value="">-- Select Loan Purpose --</option>
+                  <option value="personal-expenses">Personal Expenses</option>
+                  <option value="home-improvement">Home Improvement</option>
+                  <option value="education">Education</option>
+                  <option value="business">Business</option>
+                  <option value="vehicle-purchase">Vehicle Purchase</option>
+                  <option value="debt-consolidation">Debt Consolidation</option>
+                  <option value="investment">Investment</option>
+                  <option value="agriculture">Agriculture</option>
+                  <option value="others">Others</option>
+                </select>
+                <div
+                  *ngIf="
+                    loanDetails.get('purpose')?.invalid &&
+                    (loan_submitted ||
+                      loanDetails.get('purpose')?.dirty ||
+                      loanDetails.get('purpose')?.touched)
+                  "
+                  class="error"
+                >
+                  <small *ngIf="loanDetails.get('purpose')?.errors?.['required']"
+                    >Purpose of Loan is required.</small
+                  >
+                </div>
+              </div>
+            </div>
+            <div class="row">
+              <div class="col-sm-12 col-md-12 mb-3">
+                <label class="form-label"
+                  >Collateral <span class="important-star">*</span></label
+                >
+      
+                <select formControlName="collateral" class="form-control">
+                  <option value="">-- Select Collateral Type --</option>
+                  <option value="real-estate">Real Estate</option>
+                  <option value="vehicle">Vehicle</option>
+                  <option value="financial-assets">Financial Assets</option>
+                  <option value="personal-property">Personal Property</option>
+                  <option value="business-assets">Business Assets</option>
+                  <option value="agricultural-assets">Agricultural Assets</option>
+                  <option value="others">Others</option>
+                </select>
+                <div
+                  *ngIf="
+                    loanDetails.get('collateral')?.invalid &&
+                    (loan_submitted ||
+                      loanDetails.get('collateral')?.dirty ||
+                      loanDetails.get('collateral')?.touched)
+                  "
+                  class="error"
+                >
+                  <small *ngIf="loanDetails.get('collateral')?.errors?.['required']"
+                    >Collateral is required.</small
+                  >
+                </div>
+              </div>
+            </div>
+      
+            <div class="d-flex justify-content-end mt-3">
+              <button
+                type="button"
+                class="btn btn-secondary me-2"
+                (click)="goToPreviousTab()"
+              >
+                Back
+              </button>
+              <button type="button" class="btn btn-primary" (click)="onSaveAndNext()">
+                Save & Next
+              </button>
+            </div>
+          </form>
+      </p-tabPanel>
+  
+    
+  
+      <p-tabPanel
+        header="Confirmation"
+        *ngIf="!selectedCustomer?.id"
+        [disabled]="
+          !(
+            this.loanDetails.valid
+          )
+        "
+      >
+        <div id="customer-details">
+          <div class="main-wrapper">
+            <div class="customer-wrapper">
+              <p class="customer-heading">Loan information</p>
+            </div>
+            <div class="cus-wrapper">
+              <div class="row">
+                <div class="col-3">
+                  <p class="cus-label">Loan Type</p>
+                  <p class="cus-value">{{ loanDetails.value.loanType }}</p>
+                </div>
+                <div class="col-3">
+                  <p class="cus-label">loan Tenure</p>
+                  <p class="cus-value">{{ loanDetails.value.loanTenure }}</p>
+                </div>
+                <div class="col-3">
+                  <p class="cus-label">Loan Amount</p>
+                  <p class="cus-value">{{ loanDetails.value.loanAmount }}</p>
+                </div>
+              </div>
+              <div class="row">
+                <div class="col-3">
+                  <p class="cus-label">purpose</p>
+                  <p class="cus-value">{{ loanDetails.value.purpose }}</p>
+                </div>
+                <div class="col-3">
+                  <p class="cus-label">Collateral</p>
+                  <p class="cus-value">{{ loanDetails.value.collateral }}</p>
+                </div>
+              </div>
+              <!-- <div class="row">
+                <div class="col-3">
+                  <p class="cus-label">Address</p>
+                  <p class="cus-value">{{ personalForm.value.streetAddress }}</p>
+                </div>
+                <div class="col-3">
+                  <p class="cus-label">City</p>
+                  <p class="cus-value">{{ personalForm.value.city }}</p>
+                </div>
+                <div class="col-3">
+                  <p class="cus-label">State</p>
+                  <p class="cus-value">{{ personalForm.value.state }}</p>
+                </div>
+                <div class="col-3">
+                  <p class="cus-label">Country</p>
+                  <p class="cus-value">thailand</p>
+                </div>
+              </div> -->
+              <!-- <div class="row">
+                <div class="col-3">
+                  <p class="cus-label">PinCode</p>
+                  <p class="cus-value">{{ personalForm.value.postalCode }}</p>
+                </div>
+              </div> -->
+            </div>
+          </div>
+  
+  
+          <div class="d-flex justify-content-end mt-3">
+            <!-- Back button -->
+            <button
+              type="button"
+              class="btn btn-secondary me-2"
+              (click)="goToPreviousTab()"
+            >
+              Back
+            </button>
+            <!-- Save & Next button -->
+            <button type="button" class="btn btn-primary" (click)="submitForm()">
+              Confirm
+            </button>
+          </div>
+        </div>
+      </p-tabPanel>
+    </p-tabView>
+  </div>
+  

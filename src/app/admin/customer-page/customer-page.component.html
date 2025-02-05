@@ -1,0 +1,834 @@
+
+<div class="juristic-page" *ngIf="isLoan">
+
+<div id="cus-data">
+    
+  
+    <!-- <div class="back-wrapper">
+        <i class="pi pi-chevron-left back-icon" (click)="back()" style="color: slateblue"></i>
+        <p>Back</p>
+    </div> -->
+
+    <div class="cus-wrapper">
+        <div class="cus-card">
+          <div class="first">
+            <div class="image-wrapper">
+                <img [src]="childData.profilePhoto" />
+              </div>
+              <div class="content-wrapper">
+                <p class="cus-name">{{childData.fullName}}</p>
+                <p class="cus-id">
+                  Customer ID: <span class="customer-data">{{childData.customer_id}}</span>
+                </p>
+              </div>
+          </div>
+          <div class="apply-loans">
+            <div>
+                <button type="button" class="btn btn-primary" (click)="applyLoan()">
+                    Apply Loan
+                  </button>
+            </div>
+              <div>
+                <button type="button" class="btn btn-primary" (click)="applyCreditCard()">
+                    Apply Credit Card
+                  </button>
+              </div>
+        </div>
+        </div>
+       
+      </div>
+</div>
+
+<div id="customer-details">
+    <div class="main-wrapper">
+       <div class="customer-wrapper">
+           <p class="customer-heading">Basic information</p>
+       </div>
+       <div class="cus-wrapper">
+           <div class="row">
+               <div class="col-3">
+                   <p class="cus-label">Full Name</p>
+                   <p class="cus-value">{{childData.fullName}}</p>
+               </div>
+               <!-- <div class="col-3">
+                   <p class="cus-label">Father/ Husband </p>
+                   <p class="cus-value">Mr. Ramaswamy</p>
+               </div> -->
+               <div class="col-3">
+                   <p class="cus-label">Gender </p>
+                   <p class="cus-value">{{childData.gender}}</p>
+               </div>
+               <div class="col-3">
+                   <p class="cus-label">Date of Birth</p>
+                   <p class="cus-value">{{childData.dateOfBirth}}</p>
+               </div>
+           </div>
+           <div class="row">
+               <div class="col-3">
+                   <p class="cus-label">Mobile number</p>
+                   <p class="cus-value">{{childData.mobileNumber}}</p>
+               </div>
+               <div class="col-3">
+                   <p class="cus-label">Email </p>
+                   <p class="cus-value">{{childData.email}}</p>
+               </div>
+               <div class="col-3">
+                <p class="cus-label">Address</p>
+                <p class="cus-value">{{childData.streetAddress}}</p>
+            </div>
+           </div>
+           <div class="row">
+               <div class="col-3">
+                   <p class="cus-label">City </p>
+                   <p class="cus-value">{{childData.city}}</p>
+               </div>
+               <div class="col-3">
+                   <p class="cus-label">State </p>
+                   <p class="cus-value">{{childData.state}}</p>
+               </div>
+               <div class="col-3">
+                   <p class="cus-label">Country</p>
+                   <p class="cus-value">India</p>
+               </div>
+           </div>
+           <div class="row">
+               <div class="col-3">
+                   <p class="cus-label">PinCode</p>
+                   <p class="cus-value">{{childData.postalCode}}</p>
+               </div>
+           </div>
+       </div>
+    </div>
+    <div class="main-wrapper">
+       <div class="customer-wrapper">
+           <p class="customer-heading">Professional Information</p>
+       </div>
+       <div class="cus-wrapper">
+           <div class="row">
+               <div class="col-3">
+                   <p class="cus-label">Company</p>
+                   <p class="cus-value">{{childData.companyName}}</p>
+               </div>
+               <div class="col-3">
+                   <p class="cus-label">Industry Type  </p>
+                   <p class="cus-value">{{childData.industryType}}</p>
+               </div>
+               <div class="col-3">
+                   <p class="cus-label">Designation </p>
+                   <p class="cus-value">{{childData.designation}}</p>
+               </div>
+               <div class="col-3">
+                   <p class="cus-label">Income per Month</p>
+                   <p class="cus-value">{{childData.incomePerMonth}}</p>
+               </div>
+           </div>
+       </div>
+    </div>
+    <div class="main-wrapper">
+       <div class="customer-wrapper">
+           <p class="customer-heading"> KYC Documents </p>
+       </div>
+       <div class="cus-wrapper">
+           <div class="row">
+               <div class="col-3">
+                   <p class="cus-label">Citizen identity card No.</p>
+                   <p class="cus-value">{{childData.cardNo}}</p>
+               </div>
+               <div class="col-3">
+                   <p class="cus-label">Passport </p>
+                   <p class="cus-value">{{childData.passport}}</p>
+               </div>
+               <div class="col-3">
+                   <p class="cus-label">Household registration book </p>
+                   <p class="cus-value">{{childData.household_registration}}</p>
+               </div>
+           </div>
+           <div class="row">
+               <div class="col-3">
+                   <p class="cus-label">Any government-issued </p>
+                   <p class="cus-value">{{childData.government_issued}}</p>
+               </div>
+               <div class="col-3">
+                   <p class="cus-label">Document ID </p>
+                   <p class="cus-value">{{childData.idNo}}</p>
+               </div>
+           </div>
+       </div>
+    </div>
+    <div class="main-wrapper">
+       <div class="customer-wrapper">
+           <p class="customer-heading"> Documents </p>
+       </div>
+       <div class="cus-wrapper">
+           <div class="row">
+               <div class="col-3">
+                   <p class="cus-label">Bank Statement for 6 month</p>
+                   <div class="img-wrapper">
+                       <div class="image"><img src="/images/file.svg" alt="file"></div>
+                       <div class="content">
+                           <span class="img-name">Household registration ..jpg</span>
+                           <span class="img-size">1.2 MB</span>
+                       </div>
+                       <div>
+                           <span  class="view">View</span>
+                       </div>
+                   </div>
+               </div>
+               <div class="col-3">
+                   <p class="cus-label">Household registration book </p>
+                   <div class="img-wrapper">
+                       <div class="image"><img src="/images/file.svg" alt="file"></div>
+                       <div class="content">
+                           <span class="img-name">Household registration ..jpg</span>
+                           <span class="img-size">1.2 MB</span>
+                       </div>
+                       <div>
+                           <span  class="view">View</span>
+                       </div>
+                   </div>
+               </div>
+               <div class="col-3">
+                   <p class="cus-label">Passport </p>
+                   <div class="img-wrapper">
+                       <div class="image"><img src="/images/file.svg" alt="file"></div>
+                       <div class="content">
+                           <span class="img-name">Household registration ..jpg</span>
+                           <span class="img-size">1.2 MB</span>
+                       </div>
+                       <div>
+                           <span  class="view">View</span>
+                       </div>
+                   </div>
+               </div>
+               <div class="col-3">
+                   <p class="cus-label">Any government ID </p>
+                   <div class="img-wrapper">
+                       <div class="image"><img src="/images/file.svg" alt="file"></div>
+                       <div class="content">
+                           <span class="img-name">Household registration ..jpg</span>
+                           <span class="img-size">1.2 MB</span>
+                       </div>
+                       <div>
+                           <span  class="view">View</span>
+                       </div>
+                   </div>
+               </div>
+           </div>
+       </div>
+    </div>
+   </div>
+</div>
+
+   <div class="m-4" *ngIf="showForm">
+    <!-- <div class="d-flex">
+      <div>
+        <h6 class="text-left">Create New Loan</h6>
+      </div>
+      <div class="ms-5">
+        <button (click)="backToList()" class="btn btn-warning">
+          Back to List
+        </button>
+      </div>
+    </div> -->
+    <div class="back-wrapper">
+      <i class="pi pi-chevron-left back-icon" (click)="back()" style="color: slateblue"></i>
+      <p>Back</p>
+  </div>
+    <p-tabView [(activeIndex)]="activeIndex">
+      <p-tabPanel
+        header="Loan Deatils"
+      >
+        <h6 class="text-left">Loan Deatils</h6>
+        <form [formGroup]="loanDetails">
+            <div class="row">
+              <div class="col-sm-12 col-md-6 mb-3">
+                <label class="form-label"
+                  >Loan Type <span class="important-star">*</span></label
+                >
+      
+                <select formControlName="loanType" class="form-control">
+                  <option value="">-- Select Loan Type --</option>
+                  <option value="personal">Personal Loan</option>
+                  <option value="home">Home Loan</option>
+                  <option value="car">Car Loan</option>
+                  <option value="education">Education Loan</option>
+                  <option value="business">Business Loan</option>
+                  <option value="gold">Gold Loan</option>
+                  <option value="credit-card">Credit Card Loan</option>
+                </select>
+                <div
+                  *ngIf="
+                    loanDetails.get('loanType')?.invalid &&
+                    (loan_submitted ||
+                      loanDetails.get('loanType')?.dirty ||
+                      loanDetails.get('loanType')?.touched)
+                  "
+                  class="error"
+                >
+                  <small *ngIf="loanDetails.get('loanType')?.errors?.['required']"
+                    >Loan Type is required.</small
+                  >
+                </div>
+              </div>
+      
+              <div class="col-sm-12 col-md-6 mb-3">
+                <label class="form-label"
+                  >Loan Tenure <span class="important-star">*</span></label
+                >
+      
+                <select formControlName="loanTenure" class="form-control">
+                  <option value="">-- Select Loan Tenure --</option>
+                  <option value="6-months">6 Months</option>
+                  <option value="1-year">1 Year</option>
+                  <option value="2-years">2 Years</option>
+                  <option value="3-years">3 Years</option>
+                  <option value="5-years">5 Years</option>
+                  <option value="10-years">10 Years</option>
+                  <option value="15-years">15 Years</option>
+                  <option value="20-years">20 Years</option>
+                  <option value="more">More than 20 Years</option>
+                </select>
+                <div
+                  *ngIf="
+                    loanDetails.get('loanTenure')?.invalid &&
+                    (loan_submitted ||
+                      loanDetails.get('loanTenure')?.dirty ||
+                      loanDetails.get('loanTenure')?.touched)
+                  "
+                  class="error"
+                >
+                  <small *ngIf="loanDetails.get('loanTenure')?.errors?.['required']"
+                    >Loan Tenure is required.</small
+                  >
+                </div>
+              </div>
+            </div>
+      
+            <div class="row">
+              <div class="col-sm-12 col-md-6 mb-3">
+                <label class="form-label"
+                  >Loan Amount Requested <span class="important-star">*</span></label
+                >
+      
+                <select formControlName="loanAmount" class="form-control">
+                  <option value="">-- Select Loan Type --</option>
+                  <option value="50000">₹50,000</option>
+                  <option value="100000">₹1,00,000</option>
+                  <option value="200000">₹2,00,000</option>
+                  <option value="500000">₹5,00,000</option>
+                  <option value="1000000">₹10,00,000</option>
+                  <option value="more">More than ₹10,00,000</option>
+                </select>
+                <div
+                  *ngIf="
+                    loanDetails.get('loanAmount')?.invalid &&
+                    (loan_submitted ||
+                      loanDetails.get('loanAmount')?.dirty ||
+                      loanDetails.get('loanAmount')?.touched)
+                  "
+                  class="error"
+                >
+                  <small *ngIf="loanDetails.get('loanAmount')?.errors?.['required']"
+                    >Loan Amount is required.</small
+                  >
+                </div>
+              </div>
+              <div class="col-sm-12 col-md-6 mb-3">
+                <label class="form-label"
+                  >Purpose of Loan <span class="important-star">*</span></label
+                >
+      
+                <select formControlName="purpose" class="form-control">
+                  <option value="">-- Select Loan Purpose --</option>
+                  <option value="personal-expenses">Personal Expenses</option>
+                  <option value="home-improvement">Home Improvement</option>
+                  <option value="education">Education</option>
+                  <option value="business">Business</option>
+                  <option value="vehicle-purchase">Vehicle Purchase</option>
+                  <option value="debt-consolidation">Debt Consolidation</option>
+                  <option value="investment">Investment</option>
+                  <option value="agriculture">Agriculture</option>
+                  <option value="others">Others</option>
+                </select>
+                <div
+                  *ngIf="
+                    loanDetails.get('purpose')?.invalid &&
+                    (loan_submitted ||
+                      loanDetails.get('purpose')?.dirty ||
+                      loanDetails.get('purpose')?.touched)
+                  "
+                  class="error"
+                >
+                  <small *ngIf="loanDetails.get('purpose')?.errors?.['required']"
+                    >Purpose of Loan is required.</small
+                  >
+                </div>
+              </div>
+            </div>
+            <div class="row">
+              <div class="col-sm-12 col-md-12 mb-3">
+                <label class="form-label"
+                  >Collateral <span class="important-star">*</span></label
+                >
+      
+                <select formControlName="collateral" class="form-control">
+                  <option value="">-- Select Collateral Type --</option>
+                  <option value="real-estate">Real Estate</option>
+                  <option value="vehicle">Vehicle</option>
+                  <option value="financial-assets">Financial Assets</option>
+                  <option value="personal-property">Personal Property</option>
+                  <option value="business-assets">Business Assets</option>
+                  <option value="agricultural-assets">Agricultural Assets</option>
+                  <option value="others">Others</option>
+                </select>
+                <div
+                  *ngIf="
+                    loanDetails.get('collateral')?.invalid &&
+                    (loan_submitted ||
+                      loanDetails.get('collateral')?.dirty ||
+                      loanDetails.get('collateral')?.touched)
+                  "
+                  class="error"
+                >
+                  <small *ngIf="loanDetails.get('collateral')?.errors?.['required']"
+                    >Collateral is required.</small
+                  >
+                </div>
+              </div>
+            </div>
+      
+            <div class="d-flex justify-content-end mt-3">
+              <button
+                type="button"
+                class="btn btn-secondary me-2"
+                (click)="goToPreviousTab()"
+              >
+                Back
+              </button>
+              <button type="button" class="btn btn-primary" (click)="onSaveAndNext()">
+                Save & Next
+              </button>
+            </div>
+          </form>
+      </p-tabPanel>
+  
+      <p-tabPanel
+        header="Confirmation"
+        *ngIf="!selectedCustomer?.id"
+      >
+        <div id="customer-details">
+          <div class="main-wrapper">
+            <div class="customer-wrapper">
+              <p class="customer-heading">Loan information</p>
+            </div>
+            <div class="cus-wrapper">
+              <div class="row">
+                <div class="col-3">
+                  <p class="cus-label">Loan Type</p>
+                  <p class="cus-value">{{ loanDetails.value.loanType }}</p>
+                </div>
+                <div class="col-3">
+                  <p class="cus-label">loan Tenure</p>
+                  <p class="cus-value">{{ loanDetails.value.loanTenure }}</p>
+                </div>
+                <div class="col-3">
+                  <p class="cus-label">Loan Amount</p>
+                  <p class="cus-value">{{ loanDetails.value.loanAmount }}</p>
+                </div>
+              </div>
+              <div class="row">
+                <div class="col-3">
+                  <p class="cus-label">purpose</p>
+                  <p class="cus-value">{{ loanDetails.value.purpose }}</p>
+                </div>
+                <div class="col-3">
+                  <p class="cus-label">Collateral</p>
+                  <p class="cus-value">{{ loanDetails.value.collateral }}</p>
+                </div>
+              </div>
+              <!-- <div class="row">
+                <div class="col-3">
+                  <p class="cus-label">Address</p>
+                  <p class="cus-value">{{ personalForm.value.streetAddress }}</p>
+                </div>
+                <div class="col-3">
+                  <p class="cus-label">City</p>
+                  <p class="cus-value">{{ personalForm.value.city }}</p>
+                </div>
+                <div class="col-3">
+                  <p class="cus-label">State</p>
+                  <p class="cus-value">{{ personalForm.value.state }}</p>
+                </div>
+                <div class="col-3">
+                  <p class="cus-label">Country</p>
+                  <p class="cus-value">thailand</p>
+                </div>
+              </div> -->
+              <!-- <div class="row">
+                <div class="col-3">
+                  <p class="cus-label">PinCode</p>
+                  <p class="cus-value">{{ personalForm.value.postalCode }}</p>
+                </div>
+              </div> -->
+            </div>
+          </div>
+          <!-- <div class="main-wrapper">
+            <div class="customer-wrapper">
+              <p class="customer-heading">Professional Information</p>
+            </div>
+            <div class="cus-wrapper">
+              <div class="row">
+                <div class="col-3">
+                  <p class="cus-label">Company</p>
+                  <p class="cus-value">
+                    {{ proffesionalInfo.value.companyName }}
+                  </p>
+                </div>
+                <div class="col-3">
+                  <p class="cus-label">Industry Type</p>
+                  <p class="cus-value">
+                    {{ proffesionalInfo.value.industryType }}
+                  </p>
+                </div>
+                <div class="col-3">
+                  <p class="cus-label">Designation</p>
+                  <p class="cus-value">
+                    {{ proffesionalInfo.value.designation }}
+                  </p>
+                </div>
+                <div class="col-3">
+                  <p class="cus-label">Income per Month</p>
+                  <p class="cus-value">
+                    {{ proffesionalInfo.value.incomePerMonth }}
+                  </p>
+                </div>
+              </div>
+            </div>
+          </div>
+          <div class="main-wrapper">
+            <div class="customer-wrapper">
+              <p class="customer-heading">KYC Documents</p>
+            </div>
+            <div class="cus-wrapper">
+              <div class="row">
+                <div class="col-3">
+                  <p class="cus-label">Citizen identity card No.</p>
+                  <p class="cus-value">{{ KYCDocuments.value.cardNo }}</p>
+                </div>
+                <div class="col-3">
+                  <p class="cus-label">Passport</p>
+                  <p class="cus-value">{{ KYCDocuments.value.passport }}</p>
+                </div>
+                <div class="col-3">
+                  <p class="cus-label">Household registration book</p>
+                  <p class="cus-value">
+                    {{ KYCDocuments.value.household_registration }}
+                  </p>
+                </div>
+              </div>
+              <div class="row">
+                <div class="col-3">
+                  <p class="cus-label">Any government-issued</p>
+                  <p class="cus-value">
+                    {{ KYCDocuments.value.government_issued }}
+                  </p>
+                </div>
+                <div class="col-3">
+                  <p class="cus-label">Document ID</p>
+                  <p class="cus-value">{{ KYCDocuments.value.idNo }}</p>
+                </div>
+              </div>
+            </div>
+          </div>
+          <div class="main-wrapper">
+            <div class="customer-wrapper">
+              <p class="customer-heading">Documents</p>
+            </div>
+            <div class="cus-wrapper">
+              <div class="row">
+                <div class="col-3">
+                  <p class="cus-label">Bank Statement for 6 month</p>
+                  <div class="img-wrapper">
+                    <div class="image">
+                      <img src="../../../assets/images/file.svg" alt="file" />
+                    </div>
+                    <div class="content">
+                      <span class="img-name">Household registration ..jpg</span>
+                      <span class="img-size">1.2 MB</span>
+                    </div>
+                    <div>
+                      <span
+                        class="view"
+                        (click)="viewFiles(KYCDocuments.value.bank_statement_doc)"
+                        >View</span
+                      >
+                    </div>
+                  </div>
+                </div>
+                <div class="col-3">
+                  <p class="cus-label">Household registration book</p>
+                  <div class="img-wrapper">
+                    <div class="image">
+                      <img src="../../../assets/images/file.svg" alt="file" />
+                    </div>
+                    <div class="content">
+                      <span class="img-name">Household registration ..jpg</span>
+                      <span class="img-size">1.2 MB</span>
+                    </div>
+                    <div>
+                      <span
+                        class="view"
+                        (click)="
+                          viewFiles(KYCDocuments.value.household_registration)
+                        "
+                        >View</span
+                      >
+                    </div>
+                  </div>
+                </div>
+                <div class="col-3">
+                  <p class="cus-label">Passport</p>
+                  <div class="img-wrapper">
+                    <div class="image">
+                      <img src="../../../assets/images/file.svg" alt="file" />
+                    </div>
+                    <div class="content">
+                      <span class="img-name">Household registration ..jpg</span>
+                      <span class="img-size">1.2 MB</span>
+                    </div>
+                    <div>
+                      <span
+                        class="view"
+                        (click)="viewFiles(KYCDocuments.value.passport_upload)"
+                        >View</span
+                      >
+                    </div>
+                  </div>
+                </div>
+                <div class="col-3">
+                  <p class="cus-label">Any government ID</p>
+                  <div class="img-wrapper">
+                    <div class="image">
+                      <img src="../../../assets/images/file.svg" alt="file" />
+                    </div>
+                    <div class="content">
+                      <span class="img-name">Household registration ..jpg</span>
+                      <span class="img-size">1.2 MB</span>
+                    </div>
+                    <div>
+                      <span
+                        class="view"
+                        (click)="
+                          viewFiles(KYCDocuments.value.government_issued_doc)
+                        "
+                        >View</span
+                      >
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div> -->
+          <div class="d-flex justify-content-end mt-3">
+            <!-- Back button -->
+            <button
+              type="button"
+              class="btn btn-secondary me-2"
+              (click)="goToPreviousTab()"
+            >
+              Back
+            </button>
+            <!-- Save & Next button -->
+            <button type="button" class="btn btn-primary" (click)="submitLoanForm()">
+              Confirm
+            </button>
+          </div>
+        </div>
+      </p-tabPanel>
+    </p-tabView>
+  </div>
+
+
+  <div class="m-4" *ngIf="showFormCredit">
+    <!-- <div class="d-flex">
+      <div>
+        <h6 class="text-left">Create New Juristic Person</h6>
+      </div>
+      <div class="ms-5">
+        <button (click)="backToList()" class="btn btn-warning">
+          Back to List
+        </button>
+      </div>
+    </div> -->
+    <div class="back-wrapper">
+      <i class="pi pi-chevron-left back-icon" (click)="back()" style="color: slateblue"></i>
+      <p>Back</p>
+  </div>
+    <p-tabView [(activeIndex)]="activeIndex">
+      <p-tabPanel
+      header="Card Details"
+    >
+      <h6 class="text-left">Card Details</h6>
+      <form [formGroup]="creditCard" (ngSubmit)="onSaveAndNextCredit()">
+        <div class="row">
+          <div class="col-sm-12 col-md-6 mb-3">
+            <label class="form-label"
+              >Annual Income Range<span class="important-star">*</span></label
+            >
+  
+            <select formControlName="annualIncome" class="form-control">
+              <option value="">-- Select Annual Income Range --</option>
+              <option value="below-50000">Below ฿50,000</option>
+              <option value="50000-100000">฿50,000 - ฿100,000</option>
+              <option value="100000-200000">฿100,000 - ฿200,000</option>
+              <option value="200000-500000">฿200,000 - ฿500,000</option>
+              <option value="500000-1000000">฿500,000 - ฿1,000,000</option>
+              <option value="above-1000000">Above ฿1,000,000</option>
+            </select>
+  
+            <div
+              *ngIf="
+                creditCard.get('annualIncome')?.invalid &&
+                (card_submitted ||
+                  creditCard.get('annualIncome')?.dirty ||
+                  creditCard.get('annualIncome')?.touched)
+              "
+              class="error"
+            >
+              <small *ngIf="creditCard.get('annualIncome')?.errors?.['required']"
+                >Annual Income Range is required.</small
+              >
+            </div>
+          </div>
+  
+          <div class="col-sm-12 col-md-6 mb-3">
+            <label class="form-label"
+              >Purpose of Credit Card <span class="important-star">*</span></label
+            >
+  
+            <select formControlName="creditCardPurpose" class="form-control">
+              <option value="">-- Select Purpose --</option>
+              <option value="personal-expenses">Personal Expenses</option>
+              <option value="online-shopping">Online Shopping</option>
+              <option value="travel">Travel</option>
+              <option value="emergency">Emergency</option>
+              <option value="bill-payments">Bill Payments</option>
+              <option value="investment">Investment</option>
+              <option value="other">Other</option>
+            </select>
+            <div
+              *ngIf="
+                creditCard.get('creditCardPurpose')?.invalid &&
+                (card_submitted ||
+                  creditCard.get('creditCardPurpose')?.dirty ||
+                  creditCard.get('creditCardPurpose')?.touched)
+              "
+              class="error"
+            >
+              <small
+                *ngIf="creditCard.get('creditCardPurpose')?.errors?.['required']"
+                >Purpose of Credit Card is required.</small
+              >
+            </div>
+          </div>
+        </div>
+  
+        <div class="row">
+          <div class="col-sm-12 col-md-12 mb-3">
+            <label class="form-label"
+              >Credit Limit<span class="important-star">*</span></label
+            >
+  
+            <input
+              type="text"
+              pInputText
+              formControlName="creditLimit"
+              class="form-control"
+              placeholder="Enter creditLimit"
+            />
+  
+            <div
+              *ngIf="
+                creditCard.get('creditLimit')?.invalid &&
+                (card_submitted ||
+                  creditCard.get('creditLimit')?.dirty ||
+                  creditCard.get('creditLimit')?.touched)
+              "
+              class="error"
+            >
+              <small *ngIf="creditCard.get('creditLimit')?.errors?.['required']"
+                >Credit Limit is required.</small
+              >
+            </div>
+          </div>
+        </div>
+  
+        <div class="d-flex justify-content-end mt-3">
+          <button
+            type="button"
+            class="btn btn-secondary me-2"
+            (click)="goToPreviousTab()"
+          >
+            Back
+          </button>
+          <button type="button" class="btn btn-primary" (click)="onSaveAndNextCredit()">
+            Save & Next
+          </button>
+        </div>
+      </form>
+    </p-tabPanel>
+  
+  
+      <p-tabPanel
+        header="Confirmation"
+        *ngIf="!selectedCustomer?.id"
+        [disabled]="
+          !(
+            this.creditCard.valid 
+          )
+        "
+      >
+        <div id="customer-details">
+          <div class="main-wrapper">
+            <div class="customer-wrapper">
+              <p class="customer-heading">Credit Card information</p>
+            </div>
+            <div class="cus-wrapper">
+              <div class="row">
+                <div class="col-3">
+                  <p class="cus-label">Annual Income</p>
+                  <p class="cus-value">{{ creditCard.value.annualIncome }}</p>
+                </div>
+                <div class="col-3">
+                  <p class="cus-label">Credit Limit</p>
+                  <p class="cus-value">{{ creditCard.value.creditLimit}}</p>
+                </div>
+              </div>
+              <div class="row">
+                <div class="col-3">
+                  <p class="cus-label">credit Card Purpose</p>
+                  <p class="cus-value">{{ creditCard.value.creditCardPurpose }}</p>
+                </div>
+              </div>
+            </div>
+          </div>
+  
+  
+          <div class="d-flex justify-content-end mt-3">
+            <!-- Back button -->
+            <button
+              type="button"
+              class="btn btn-secondary me-2"
+              (click)="goToPreviousTab()"
+            >
+              Back
+            </button>
+            <!-- Save & Next button -->
+            <button type="button" class="btn btn-primary" (click)="submitFormCredit()">
+              Confirm
+            </button>
+          </div>
+        </div>
+      </p-tabPanel>
+    </p-tabView>
+  </div>

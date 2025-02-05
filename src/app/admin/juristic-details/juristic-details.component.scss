@@ -1,0 +1,111 @@
+#customer-details{
+    padding: 20px;
+}
+.customer-heading{
+    color: #101828;
+    font-size: 14px;
+    font-weight: 500;
+    line-height: 24px;
+    background-color: #D0D5DD;
+    padding: 10px 0px 10px 4px;
+}
+.cus-label{
+    color: #475467;
+    font-size: 13px;
+    font-weight: 400;
+    line-height: 15.23px;
+
+}
+.cus-value{
+    color: #111827;
+    font-size: 14px;
+    font-weight: 500;
+    line-height: 20px;
+
+}
+.img-wrapper{
+    display: flex;
+    align-items: center;
+    border: 1px solid #E4E7EC;
+    border-radius: 8px;
+    gap: 20px;
+    padding: 4px;
+
+}
+.content{
+display: flex;
+flex-direction: column;
+}
+.view{
+    color: #175CD3;
+    font-size: 14px;
+    font-weight: 500;
+    line-height: 20px;
+    cursor: pointer;
+}
+
+.img-name{
+    color: #344054;
+    font-size: 12px;
+    font-weight: 500;
+    line-height: 18px;
+}
+.img-size{
+    color: #475467;
+    font-size: 12px;
+    font-weight: 400;
+    line-height: 18px;
+    text-align: left;
+
+}
+
+.main-image{
+    display: flex;
+    justify-content: space-between;
+}
+
+.cus-card{
+    display: flex;
+    border: 1px solid #E4E7EC;
+    padding: 20px;
+    gap: 14px;
+    border-radius: 8px;
+}
+
+.cus-name{
+font-size: 18px;
+font-weight: 600;
+line-height: 28px;
+text-align: left;
+color: #101828;
+
+}
+.cus-id{
+font-family: Inter;
+font-size: 14px;
+font-weight: 500;
+line-height: 20px;
+text-align: left;
+}
+.customer-data{
+font-family: Inter;
+font-size: 14px;
+font-weight: 500;
+line-height: 20px;
+text-align: left;
+}
+
+.back-wrapper{
+    display: flex;
+    align-items: baseline;
+    gap:10px;
+}
+
+.back-icon{
+    padding: 10px;
+    border-radius: 50%;
+    cursor: pointer;
+    &:hover{
+    background-color: #efefef;
+    }
+}

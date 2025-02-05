@@ -1,0 +1,128 @@
+.login-container {
+    display: flex;
+    height: 100vh;
+  }
+  
+  .image-section {
+    flex: 1;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    background-color: #f0f0f0; /* Optional: background color */
+  }
+  
+  .image-section img {
+    max-width: 100%;
+    max-height: 100%;
+    object-fit: cover;
+  }
+  
+  .form-section {
+    flex: 1;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    padding: 15px;
+  }
+  
+  form {
+    width: 100%;
+    max-width: 400px;
+    background-color: #fff;
+    padding: 40px;
+    box-shadow: 0px 0px 10px rgba(0, 0, 0, 0.1);
+    border-radius: 8px;
+  }
+  
+  h2 {
+    margin-bottom: 20px;
+    text-align: center;
+  }
+  
+  .form-group {
+    margin-bottom: 20px;
+  }
+  .password{
+      margin-top: 10px;
+  }
+  label {
+    display: block;
+    margin-bottom: 5px;
+  
+  }
+  
+  input {
+    width: 100%;
+    padding: 10px;
+    box-sizing: border-box;
+    border: 1px solid #ccc;
+    border-radius: 4px;
+  }
+  
+  button {
+    width: 100%;
+    padding: 10px;
+    margin-top: 20px;
+    background-color: #FD7401;
+    color: white;
+    border: none;
+    border-radius: 15px;
+    cursor: pointer;
+    font-size: 16px;
+    box-shadow: 0px 5px 10px rgba(253, 116, 1, 0.5); 
+    transition: background-color 0.3s ease, box-shadow 0.3s ease; 
+  }
+  
+  button:hover {
+    background-color: #FD7401;
+  }
+  
+  .forgot{
+      text-align: end;
+      margin-top: 10px;
+      font-size: 14px;
+      color: #888;
+  }
+  
+  .password-input-container {
+      position: relative;
+    }
+    
+    .password-toggle {
+      position: absolute;
+      right: 10px;
+      top: 50%;
+      transform: translateY(-50%);
+      cursor: pointer;
+    }
+    
+    .fa-eye-slash {
+      color: #110202;
+    }
+  
+    small {
+      color: red;
+      font-size: 12px;
+      margin-top: -10px;
+      display: block;
+    }
+
+    .create{
+      display: flex;
+      gap: 15px;
+      justify-content: center;
+      margin: 20px 0px 0px 0px;
+      .create-account{
+        color: #000;
+        padding: 10px 0px;
+      }
+      .signup{
+        color: #3B82F6;
+        padding: 10px 0px;
+        cursor: pointer;
+        text-decoration: underline;
+      }
+    }
+
+   
+    

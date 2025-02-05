@@ -1,0 +1,108 @@
+<div class="sidebar">
+  <div class="menu-name">Banking Application</div>
+  <ul>
+    <li *ngIf="id && isEmail(id)"
+      routerLinkActive="active"
+      routerLink="/dashboard"
+      [routerLinkActiveOptions]="{ exact: true }"
+    >
+      <a>
+        <i class="sidebar-icon fas fa-home"></i>
+        <span class="sidebar-text">Dashboard</span>
+      </a>
+    </li>
+    <li routerLinkActive="active" *ngIf="id && isEmail(id)" routerLink="/juristic-person-management">
+      <a>
+        <i class="sidebar-icon fas fa-user-tie"></i>
+        <span class="sidebar-text">Juristic Person</span>
+      </a>
+    </li>
+    <li routerLinkActive="active" *ngIf="id && isEmail(id)" routerLink="/request">
+      <a>
+        <i class="sidebar-icon fas fa-envelope"></i>
+        <span class="sidebar-text">Request</span>
+      </a>
+    </li>
+    <li routerLinkActive="active" *ngIf="id && isEmail(id)" routerLink="/customer-management">
+      <a>
+        <i class="sidebar-icon fas fa-users"></i>
+        <span class="sidebar-text">Customer Management</span>
+      </a>
+    </li>
+    <li 
+      class="dropdown"
+      routerLinkActive="active"
+      data-bs-toggle="dropdown"
+      aria-expanded="false"
+      *ngIf="id && isEmail(id)"
+    >
+      <a class="dropdown-toggle" href="#" role="button">
+        <i class="sidebar-icon fas fa-lightbulb"></i>
+        <span class="sidebar-text">Products Suggestion</span>
+      </a>
+      <ul class="dropdown-menu" style="background-color: #27375d">
+        <li routerLinkActive="active" routerLink="/loan-creation">
+          <a class="dropdown-item">
+            <i class="fas fa-hand-holding-usd"></i> Loan Creation
+          </a>
+        </li>
+        <li routerLinkActive="active" routerLink="/credit-card-creation">
+          <a class="dropdown-item">
+            <i class="fas fa-credit-card"></i> Credit Card Creation
+          </a>
+        </li>
+      </ul>
+    </li>
+
+    <li *ngIf="id && id.length == 6 && !isEmail(id)" routerLinkActive="active" [routerLink]="'/juristic-page/'+id">
+      <a> 
+        <i class="sidebar-icon fas fa-users"></i>
+        <span class="sidebar-text">Juristic Management</span>
+      </a>
+    </li>
+    <li *ngIf="id && id.length == 5 && !isEmail(id)" routerLinkActive="active" [routerLink]="'/customer-page/'+id">
+      <a>
+        <i class="sidebar-icon fas fa-users"></i>
+        <span class="sidebar-text">Customer Management</span>
+      </a>
+    </li>
+    
+    
+  </ul>
+</div>
+
+<div class="top-menu">
+  <div class="page-name">
+    {{ pageTitle }}
+  </div>
+  <div class="menu-icons">
+    <!-- <span>{{ pageTitle }}</span> -->
+    <div class="dropdown" style="margin-left: auto">
+      <a
+        href="#"
+        class="dropdown-toggle"
+        data-bs-toggle="dropdown"
+        aria-haspopup="true"
+        aria-expanded="false"
+        id="userDropdown"
+      >
+        <img src="/images/profile.jpg" alt="User Photo" class="user-photo">
+      </a>
+      <!-- Dropdown Menu -->
+      <div class="dropdown-menu" aria-labelledby="userDropdown">
+        <a class="dropdown-item" id="logout" (click)="logout()"
+          >Logout</a
+        >
+      </div>
+    </div>
+  </div>
+</div>
+
+<div class="dashboard-container mt-4">
+  <!-- Sidebar and Content go here -->
+  <!-- <router-outlet></router-outlet> -->
+  <br />
+</div>
+<div class="content">
+  <router-outlet></router-outlet>
+</div>

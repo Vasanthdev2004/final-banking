@@ -1,0 +1,115 @@
+<div class="main-card">
+    <div class="card-wrapper">
+      <div class="cards">
+        <div class="profile-two">
+          <div class="pi pi-inbox"></div> <!-- Changed Icon -->
+        </div>
+        <div class="profile-data">
+          <span class="employee">Total Request</span>
+          <span class="employee-name">{{totalPendingRequests}}</span>
+        </div>
+      </div>
+      <div class="cards">
+        <div class="profile-five">
+          <div class="pi pi-briefcase"></div> <!-- Changed Icon -->
+        </div>
+        <div class="profile-data">
+          <span class="employee">Juristic Request</span>
+          <span class="employee-name">{{juristicPending}}</span>
+        </div>
+      </div>
+      <div class="cards">
+        <div class="profile-six">
+          <div class="pi pi-user"></div> <!-- Changed Icon -->
+        </div>
+        <div class="profile-data">
+          <span class="employee">Customer Request</span>
+          <span class="employee-name">{{customerPending}}</span>
+        </div>
+      </div>
+      <div class="cards">
+        <div class="profile-three">
+          <div class="pi pi-money-bill"></div> <!-- Changed Icon -->
+        </div>
+        <div class="profile-data">
+          <span class="employee">Loan Request</span>
+          <span class="employee-name">{{loanPending}}</span>
+        </div>
+      </div>
+      <div class="cards">
+        <div class="profile-four">
+          <div class="pi pi-credit-card"></div> <!-- Changed Icon -->
+        </div>
+        <div class="profile-data">
+          <span class="employee">CreditCard Request</span>
+          <span class="employee-name">{{creditPending}}</span>
+        </div>
+      </div>  
+    </div>
+  </div>
+  
+  
+  <div class="tab-card">
+    <p-tabView [(activeIndex)]="activeIndex" (activeIndexChange)="onTabChange($event)">
+        <p-tabPanel *ngFor="let tab of tabs" [header]="tab.title">
+        </p-tabPanel>
+      </p-tabView>
+      <ng-template #dynamicComponentContainer></ng-template>
+      
+      
+  </div>
+  
+  
+  
+  
+  
+  
+  
+  <!-- <h6 class="text-left">Requests</h6> -->
+    <!-- <div class="table-controls">
+      <div class="search-container">
+          <span class="p-input-icon-left">
+              <i class="pi pi-search"></i>
+              <input type="text" pInputText placeholder="Search" [(ngModel)]="searchQuery" />
+          </span>
+      </div>
+      <div class="button-group">
+        <button (click)="openFilterDialog()" class="btn btn-primary">Filter</button>
+      </div>
+    </div>
+    <br />
+    <p-table [value]="filteredRequests" responsiveLayout="stack" [breakpoint]="'960px'" [tableStyle]="{'min-width': '50rem'}" class="p-table">
+      <ng-template pTemplate="header" let-columns>
+        <tr>
+          <th>Request ID</th>
+          <th>Customer Name</th>
+          <th>Request Date</th>
+          <th>Status</th>
+          <th>Actions</th>
+        </tr>
+      </ng-template>
+      <ng-template pTemplate="body" let-request let-columns="columns">
+        <tr>
+          <td>
+            <span class="p-column-title">Request ID</span>{{ request.requestId }}
+          </td>
+          <td>
+            <span class="p-column-title">Customer Name</span>{{ request.customerName }}
+          </td>
+          <td>
+            <span class="p-column-title">Request Date</span>{{ request.requestDate }}
+          </td>
+          <td>
+            <span class="p-column-title">Status</span>{{ request.status }}
+          </td>
+          <td>
+            <button (click)="approveRequest(request)"class="btn btn-sm btn-success" title="Approve" style="margin-right: 5px;">
+              Approve <i class="pi pi-check"></i>
+            </button>
+            <button (click)="deleteRequest(request)" class="btn btn-sm btn-danger" title="Reject">
+              Reject <i class="pi pi-trash"></i>
+            </button>
+          </td>
+        </tr>
+      </ng-template>
+    </p-table> -->

@@ -1,0 +1,144 @@
+.p-tabview .p-tabview-nav li .p-tabview-nav-link{
+    color: #175CD3;
+    font-size: 14px;
+    font-weight: 500;
+    line-height: 20px;
+    text-decoration: none;
+}
+.tab-card{
+    border: 1px solid #D0D5DD;
+    margin-top: 10px;
+    border-radius: 8px;
+}
+
+.p-tabview-panels{
+    padding: 0px;
+}
+
+.cursor-pointer{
+    cursor: pointer;
+}
+
+.swal2-popup.swal2-modal.swal2-show{
+    width: 75% !important;
+}
+
+small{
+    color: red;
+    position: absolute;
+    // bottom: -22px;
+    margin-bottom: 10px;
+    font-size: 16px;
+}
+
+.error{
+    position: relative;
+}
+.formcontrol{
+    margin-bottom:20px;
+}
+
+.action-wrapper{
+    display: flex;
+    gap: 15px;
+    padding: 5px;
+}
+.pi{
+    cursor: pointer;
+ 
+}
+.edit{
+    padding: 8px;
+    &:hover{
+        background-color: #ececec;
+        padding: 8px;
+        border-radius: 50%;
+    }
+
+}
+.delete{
+    padding: 8px;
+    &:hover{
+        background-color: #ececec;
+        padding: 8px;
+        border-radius: 50%;
+    }
+}
+
+.p-calendar {
+    width: 100% !important;
+}
+
+.delete-wrapper{
+    display: flex;
+    justify-content: end;
+    gap: 10px;
+    .cancel-btn{
+        .p-button{
+            background-color: #fff;
+            color: #344054;
+            border:1px solid #D0D5DD;
+            box-shadow: none;
+            border-radius: 8px;
+            padding: 8px 25px;
+
+        }
+    }
+    .create-btn{
+        .p-button{
+            background-color: #27375d;
+            color: #fff;
+            box-shadow: none;
+            border-radius: 8px;
+            border: none;
+        }
+    }
+}
+
+.p-inputtext{
+    box-shadow: none;
+    &:hover{
+        border: 1px solid green;
+
+    }
+}
+.p-textarea{
+    box-shadow: none;
+}
+
+label{
+    margin: 10px 0px;
+}
+
+.add-btn{
+    border-radius: 8px;
+    background-color: #27375d;
+    border: none;
+    font-size: 15px;
+}
+
+// .p-datatable .p-datatable-tbody > tr{
+//     padding: 2px;
+//     &:hover{
+//         background-color: #f8f2f2;
+//     }
+// }   
+
+.customer-btn{
+
+    .p-button{
+        width: 100%;
+        box-shadow: none;
+        border-radius: 8px;
+    }
+
+}
+.juristic-btn{
+    .p-button{
+        width: 100%;
+        box-shadow: none;
+        background-color: orange;
+        border: none;
+        border-radius: 8px;
+    }
+}

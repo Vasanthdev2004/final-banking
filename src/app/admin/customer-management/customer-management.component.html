@@ -1,0 +1,1343 @@
+
+
+
+
+<div class="main-card">
+  <div class="card-wrapper">
+    <div class="cards">
+      <div class="profile">
+        <div class="pi pi-user"></div> <!-- Changed Icon -->
+      </div>
+      <div class="profile-data">
+        <span class="employee">Total Customer</span>
+        <span class="employee-name">{{totalCustomer}}</span>
+      </div>
+    </div>
+    <div class="cards">
+      <div class="profile-one">
+        <div class="pi pi-check-circle"></div> <!-- Changed Icon -->
+      </div>
+      <div class="profile-data">
+        <span class="employee">Approved</span>
+        <span class="employee-name">{{approvedCustomer}}</span>
+      </div>
+    </div>
+    <div class="cards">
+      <div class="profile-two">
+        <div class="pi pi-eraser"></div> <!-- Changed Icon -->
+      </div>
+      <div class="profile-data">
+        <span class="employee">Rejected</span>
+        <span class="employee-name">{{rejectedCustomer}}</span>
+      </div>
+    </div>
+  </div>
+</div>
+
+
+
+
+
+
+
+
+<div class="m-4" *ngIf="!showForm">
+    <!-- <h6 class="text-left">Customer Management</h6> -->
+    <br />
+    <div class="table-controls">
+      <div class="search-container">
+        <!-- <span class="p-input-icon-left">
+          <i class="pi pi-search"></i>
+          <input
+            type="text" 
+            pInputText
+            placeholder="Search"
+            [(ngModel)]="searchQuery"
+            (ngModelChange)="onSearch()"
+          />
+        </span> -->
+      </div>
+      <div class="button-group">
+        <!-- <button (click)="openFilterDialog()" class="btn btn-primary">Filter</button> -->
+        <!-- <button (click)="openAddJuristicPersonDialog()" class="btn btn-success">
+          Add New Customer
+        </button> -->
+        <button 
+        pButton 
+        pRipple 
+        label=" Add New Customer" 
+        (click)="openAddJuristicPersonDialog()"
+        [raised]="true"
+        class="p-button-success add-btn">
+    </button>
+        <!-- <button (click)="exportData()" class="btn btn-info">Export</button> -->
+      </div>
+    </div>
+    <br />
+    <p-table
+    #dt2 [value]="filteredProducts" responsiveLayout="stack" [globalFilterFields]="['fullName','customer_id','std_class','std_sec','status']" [breakpoint]="'960px'"
+    [tableStyle]="{'min-width': '50rem'}"
+    >
+    <ng-template pTemplate="caption">
+      <div class="row">
+          <div class="col-md-3">
+              <span class="p-input-icon-left mx-2 mb-2 w-100">
+                  <i class="pi pi-search"></i>
+                  <input pInputText type="text"
+                      (input)="dt2.filterGlobal($event.target.value, 'contains')"
+                      placeholder="Search" class="w-100 ps-5" />
+              </span>
+          </div>
+      </div>
+  </ng-template>
+      <ng-template pTemplate="header" let-columns>
+        <tr>
+          <th>Customer Id</th>
+          <th>Customer Name</th>
+          <th>Mobile Number</th>
+          <th>Email</th>
+          <th>Company</th>
+          <th>Designation</th>
+          <th>Status</th>
+          <th>Actions</th>
+          <!-- New column for actions -->
+        </tr>
+      </ng-template>
+      <ng-template
+        pTemplate="body"
+        let-product
+        let-columns="columns"
+        let-rowIndex="rowIndex"
+      >
+        <tr>
+          <td (click)="cusData(product.customer_id)">
+            <span class="p-column-title">Customer Id</span>{{ product.customer_id }}
+          </td>
+          <td (click)="cusData(product.customer_id)">
+            <span class="p-column-title">Customer Name</span
+            >{{ product.fullName }}
+          </td>
+          <td (click)="cusData(product.customer_id)">
+            <span class="p-column-title">Mobile Number</span
+            >{{ product.mobileNumber }}
+          </td>
+          <td (click)="cusData(product.customer_id)">
+            <span class="p-column-title">Email</span>{{ product.email }}
+          </td>
+          <td (click)="cusData(product.customer_id)">
+            <span class="p-column-title">Company</span>{{ product.companyName }}
+          </td>
+          <td (click)="cusData(product.customer_id)">
+            <span class="p-column-title">Designation</span
+            >{{ product.designation }}
+          </td>
+          <td>
+            <span
+              [ngClass]="{
+                'approved': product.approve_sts == '1',
+                'pending': product.approve_sts != '1' && product.approve_sts != '2',
+                'rejected': product.approve_sts == '2'  
+              }"
+            >
+              {{ product.approve_sts == '1' ? 'Approved' : (product.approve_sts == '2' ? 'Rejected' : 'Pending') }}
+            </span>
+          </td>
+          <td>
+            <div class="action-wrapper">
+              <div class="edit">
+              <i class="pi pi-pencil"  style="color: black" (click)="editJuristicPerson(product)" ></i>
+              </div>
+              <div class="delete">
+                <i class="pi pi-trash"  style="color: red" (click)="rejectForm(product.id)"></i>
+              </div>
+            </div>
+          </td>
+        </tr>
+      </ng-template>
+    </p-table>
+  </div>
+  
+  <div class="m-4" *ngIf="showForm">
+    <!-- <div class="d-flex">
+      <div>
+        <h6 class="text-left">Create New Customer</h6>
+      </div>
+      <div class="ms-5">
+        <button (click)="backToList()" class="btn btn-warning">
+          Back to List
+        </button>
+      </div>
+    </div> -->
+    <div class="back-wrapper">
+      <i class="pi pi-chevron-left back-icon" (click)="back()" style="color: slateblue"></i>
+      <p>Back</p>
+  </div>
+    <p-tabView [(activeIndex)]="activeIndex">
+      <p-tabPanel header="Personal Information">
+        <h6 class="text-left">Personal Information</h6>
+        <form [formGroup]="personalForm">
+          <div class="row">
+            <div class="col-sm-12 col-md-6 mb-3">
+              <label class="form-label"
+                >Full Name <span class="important-star">*</span></label
+              >
+              <input
+                type="text"
+                pInputText
+                formControlName="fullName"
+                class="form-control"
+                placeholder="Enter your full name"
+              />
+              <div
+                *ngIf="
+                  personalForm.get('fullName')?.invalid &&
+                  (personalForm.get('fullName')?.touched ||
+                    personalForm.get('fullName')?.dirty)
+                "
+                class="error"
+              >
+                <small *ngIf="personalForm.get('fullName')?.errors?.['required']"
+                  >FullName is required.</small
+                >
+              </div>
+            </div>
+            <div class="col-sm-12 col-md-6 mb-3">
+              <label class="form-label"
+                >Email ID <span class="important-star">*</span></label
+              >
+              <input
+                type="email"
+                pInputText
+                formControlName="email"
+                class="form-control"
+                placeholder="Enter your email"
+              />
+              <div
+                *ngIf="
+                  personalForm.get('email')?.invalid &&
+                  (personalForm.get('email')?.touched ||
+                    personalForm.get('email')?.dirty)
+                "
+                class="error"
+              >
+                <small *ngIf="personalForm.get('email')?.errors?.['required']"
+                  >Email is required.</small
+                >
+                <small *ngIf="personalForm.get('email')?.errors?.['email']"
+                  >Invalid email.</small
+                >
+              </div>
+            </div>
+          </div>
+          <div class="row">
+            <div class="col-sm-12 col-md-6 mb-3">
+              <label class="form-label"
+                >Gender <span class="important-star">*</span></label
+              >
+              <div>
+                <input
+                  type="radio"
+                  id="male"
+                  formControlName="gender"
+                  value="male"
+                />
+                <label for="male">Male</label>
+                &nbsp;&nbsp;&nbsp;&nbsp;
+                <input
+                  type="radio"
+                  id="female"
+                  formControlName="gender"
+                  value="female"
+                />
+                <label for="female">Female</label>
+                &nbsp;&nbsp;&nbsp;&nbsp;
+                <input
+                  type="radio"
+                  id="other"
+                  formControlName="gender"
+                  value="other"
+                />
+                <label for="other">Other</label>
+              </div>
+              <div
+                *ngIf="
+                  personalForm.get('gender')?.invalid &&
+                  (personalForm.get('gender')?.touched ||
+                    personalForm.get('gender')?.dirty)
+                "
+                class="error"
+              >
+                <small *ngIf="personalForm.get('gender')?.errors?.['required']"
+                  >Gender is required.</small
+                >
+              </div>
+            </div>
+            <div class="col-sm-12 col-md-6 mb-3">
+              <label class="form-label"
+                >Mobile Number <span class="important-star">*</span></label
+              >
+              <div class="input-group">
+                <span class="input-group-text">+66</span>
+                <input
+                  type="text"
+                  pInputText
+                  formControlName="mobileNumber"
+                  class="form-control"
+                  placeholder="Enter your mobile number"
+                  maxlength="10"
+                  minlength="10"
+                  pattern="[0-9]*"
+                />
+              </div>
+              <div
+                *ngIf="
+                  personalForm.get('mobileNumber')?.invalid &&
+                  (submitted ||
+                    personalForm.get('mobileNumber')?.dirty ||
+                    personalForm.get('mobileNumber')?.touched)
+                "
+                class="error"
+              >
+                <small
+                  *ngIf="personalForm.get('mobileNumber')?.errors?.['required']"
+                  >Mobile number is required.</small
+                >
+                <small
+                  *ngIf="personalForm.get('mobileNumber')?.errors?.['pattern']"
+                  >Enter a valid mobile number.</small
+                >
+                <small
+                  *ngIf="personalForm.get('mobileNumber')?.errors?.['minlength']"
+                  >Mobile number must be 10 digits.</small
+                >
+              </div>
+            </div>
+          </div>
+          <div class="row">
+            <div class="col-sm-12 col-md-6 mb2">
+              <label class="form-label"
+                >Date of Birth <span class="important-star">*</span></label
+              >
+              <input
+                type="date"
+                pInputText
+                formControlName="dateOfBirth"
+                class="form-control"
+                placeholder="YYYY-MM-DD"
+              />
+              <!-- <div>
+                <p-calendar 
+                [(ngModel)]="date2" 
+                [iconDisplay]="'input'" 
+                [showIcon]="true" 
+                formControlName="dateOfBirth"
+                placeholder="Select Date"
+                inputId="icondisplay" />
+              </div> -->
+              <div
+                *ngIf="
+                  personalForm.get('dateOfBirth')?.invalid &&
+                  (submitted ||
+                    personalForm.get('dateOfBirth')?.touched ||
+                    personalForm.get('dateOfBirth')?.dirty)
+                "
+                class="error"
+              >
+                <small
+                  *ngIf="personalForm.get('dateOfBirth')?.errors?.['required']"
+                  >DateOfBirth is required.</small
+                >
+              </div>
+            </div>
+            <div class="col-sm-12 col-md-6 mb-3">
+              <label class="form-label"
+                >Street Address <span class="important-star">*</span></label
+              >
+              <input
+                type="text"
+                pInputText
+                formControlName="streetAddress"
+                class="form-control"
+                placeholder="Enter your street address"
+              />
+              <div
+                *ngIf="
+                  personalForm.get('streetAddress')?.invalid &&
+                  (submitted ||
+                    personalForm.get('streetAddress')?.touched ||
+                    personalForm.get('streetAddress')?.dirty)
+                "
+                class="error"
+              >
+                <small
+                  *ngIf="personalForm.get('streetAddress')?.errors?.['required']"
+                  >Street Address is required.</small
+                >
+                <small
+                  *ngIf="personalForm.get('streetAddress')?.errors?.['streetAddress']"
+                  >Invalid Street Address.</small
+                >
+              </div>
+            </div>
+          </div>
+          <div class="row">
+            <div class="col-sm-12 col-md-6 mb-3">
+              <label class="form-label">Street Address Line 2</label>
+              <input
+                type="text"
+                pInputText
+                formControlName="streetAddress2"
+                class="form-control"
+                placeholder="Apartment, suite, etc. (optional)"
+              />
+            </div>
+            <div class="col-sm-12 col-md-6 mb-3">
+              <label class="form-label"
+                >State/Province <span class="important-star">*</span></label
+              >
+              <input
+                type="text"
+                pInputText
+                formControlName="state"
+                class="form-control"
+                placeholder="Enter your state/province"
+              />
+              <div
+                *ngIf="
+                  personalForm.get('state')?.invalid &&
+                  (submitted ||
+                    personalForm.get('state')?.touched ||
+                    personalForm.get('state')?.dirty)
+                "
+                class="error"
+              >
+                <small *ngIf="personalForm.get('state')?.errors?.['required']"
+                  >State is required.</small
+                >
+                <!-- <small *ngIf="personalForm.get('state')?.errors?.['state']">Invalid State.</small> -->
+              </div>
+            </div>
+          </div>
+          <div class="row">
+            <div class="col-sm-12 col-md-6 mb-3">
+              <label class="form-label"
+                >City <span class="important-star">*</span></label
+              >
+              <input
+                type="text"
+                pInputText
+                formControlName="city"
+                class="form-control"
+                placeholder="Enter your city"
+              />
+              <div
+                *ngIf="
+                  personalForm.get('city')?.invalid &&
+                  (submitted ||
+                    personalForm.get('city')?.touched ||
+                    personalForm.get('city')?.dirty)
+                "
+                class="error"
+              >
+                <small *ngIf="personalForm.get('city')?.errors?.['required']"
+                  >City is required.</small
+                >
+              </div>
+            </div>
+            <div class="col-sm-12 col-md-6 mb-3">
+              <label class="form-label"
+                >Postal/Zip Code <span class="important-star">*</span></label
+              >
+              <input
+                type="text"
+                pInputText
+                formControlName="postalCode"
+                class="form-control"
+                placeholder="Enter your postal/zip code"
+              />
+              <div
+                *ngIf="
+                  personalForm.get('postalCode')?.invalid &&
+                  (submitted ||
+                    personalForm.get('postalCode')?.touched ||
+                    personalForm.get('postalCode')?.dirty)
+                "
+                class="error"
+              >
+                <small
+                  *ngIf="personalForm.get('postalCode')?.errors?.['required']"
+                  >PostalCode is required.</small
+                >
+              </div>
+            </div>
+          </div>
+  
+          <div class="row"></div>
+          <div class="col-sm-12 col-md- mb-3">
+            <label class="form-label"
+              >Profile Photo <span class="important-star">*</span></label
+            >
+            <div
+              class="input-group sm-3"
+              *ngIf="!personalForm.value.profilePhoto"
+            >
+              <input
+                class="form-control"
+                autocomplete="off"
+                type="file"
+                (change)="uploadFiles($event, 'personalForm', 'profilePhoto')"
+              />
+            </div>
+            <div *ngIf="personalForm.value.profilePhoto">
+              <a
+                class="text-primary cursor-pointer"
+                (click)="viewFiles(personalForm.value.profilePhoto)"
+              >
+                {{ personalForm.value.profilePhoto }}</a
+              >&nbsp;&nbsp;&nbsp;
+              <i
+                class="pi pi-times-circle mt-2 text-danger cursor-pointer"
+                (click)="removeDoc('personalForm', 'profilePhoto')"
+              ></i>
+            </div>
+            <div
+              *ngIf="
+                personalForm.get('profilePhoto')?.invalid &&
+                (submitted ||
+                  personalForm.get('profilePhoto')?.touched ||
+                  personalForm.get('profilePhoto')?.dirty)
+              "
+              class="error"
+            >
+              <small
+                *ngIf="personalForm.get('profilePhoto')?.errors?.['required']"
+                >profilePhoto is required.</small
+              >
+            </div>
+          </div>
+  
+          <!-- Button row -->
+          <div class="d-flex justify-content-end mt-3">
+            <!-- Save & Next button -->
+            <button
+              type="button"
+              class="btn btn-primary"
+              (click)="onSaveAndNext()"
+            >
+              Save & Next
+            </button>
+          </div>
+        </form>
+      </p-tabPanel>
+  
+      <p-tabPanel
+        header="Professional Information"
+        [disabled]="!this.personalForm.valid"
+      >
+        <h6 class="text-left">Professional Information</h6>
+        <form [formGroup]="proffesionalInfo">
+          <div class="row">
+            <div class="col-sm-12 col-md-12 mb-3">
+              <label class="form-label"
+                >Company Name <span class="important-star">*</span></label
+              >
+              <input
+                type="text"
+                pInputText
+                formControlName="companyName"
+                class="form-control"
+                placeholder="Enter Company Name"
+              />
+              <div
+                *ngIf="
+                  proffesionalInfo.get('companyName')?.invalid &&
+                  (proffesionalInfo_submitted ||
+                    proffesionalInfo.get('companyName')?.touched ||
+                    proffesionalInfo.get('companyName')?.dirty)
+                "
+                class="error"
+              >
+                <small
+                  *ngIf="proffesionalInfo.get('companyName')?.errors?.['required']"
+                  >companyName is required.</small
+                >
+              </div>
+            </div>
+          </div>
+          <div class="col-sm-12 col-md-12 mb-3">
+            <label class="form-label"
+              >Industry Type <span class="important-star">*</span></label
+            >
+  
+            <select
+              pInputText
+              formControlName="industryType"
+              class="form-control"
+            >
+              <option value="">-- Select Industry Type --</option>
+              <option value="IT">Information Technology (IT)</option>
+              <option value="Healthcare">Healthcare</option>
+              <option value="Finance">Finance and Banking</option>
+              <option value="Manufacturing">Manufacturing</option>
+              <option value="Education">Education</option>
+              <option value="Construction">Construction and Real Estate</option>
+              <option value="Other">Other</option>
+            </select>
+            <div
+              *ngIf="
+                proffesionalInfo.get('industryType')?.invalid &&
+                (proffesionalInfo_submitted ||
+                  proffesionalInfo.get('industryType')?.dirty ||
+                  proffesionalInfo.get('industryType')?.touched)
+              "
+              class="error"
+            >
+              <small
+                *ngIf="proffesionalInfo.get('industryType')?.errors?.['required']"
+                >Industry Type is required.</small
+              >
+            </div>
+          </div>
+  
+          <div class="row">
+            <div class="col-sm-12 col-md-6 mb-3">
+              <label class="form-label"
+                >Designation <span class="important-star">*</span></label
+              >
+              <input
+                type="text"
+                pInputText
+                formControlName="designation"
+                class="form-control"
+                placeholder="Enter Designation"
+              />
+              <div
+                *ngIf="
+                  proffesionalInfo.get('designation')?.invalid &&
+                  (proffesionalInfo_submitted ||
+                    proffesionalInfo.get('designation')?.touched ||
+                    proffesionalInfo.get('designation')?.dirty)
+                "
+                class="error"
+              >
+                <small
+                  *ngIf="proffesionalInfo.get('designation')?.errors?.['required']"
+                  >designation is required.</small
+                >
+              </div>
+            </div>
+            <div class="col-sm-12 col-md-6 mb-3">
+              <label class="form-label"
+                >Income Per Month <span class="important-star">*</span></label
+              >
+              <input
+                type="text"
+                pInputText
+                formControlName="incomePerMonth"
+                class="form-control"
+                placeholder="Enter Income"
+              />
+              <div
+                *ngIf="
+                  proffesionalInfo.get('incomePerMonth')?.invalid &&
+                  (proffesionalInfo_submitted ||
+                    proffesionalInfo.get('incomePerMonth')?.touched ||
+                    proffesionalInfo.get('incomePerMonth')?.dirty)
+                "
+                class="error"
+              >
+                <small
+                  *ngIf="proffesionalInfo.get('incomePerMonth')?.errors?.['required']"
+                  >IncomePerMonth is required.</small
+                >
+              </div>
+            </div>
+          </div>
+  
+          <!-- Button row -->
+          <div class="d-flex justify-content-end mt-3">
+            <!-- Back button -->
+            <button
+              type="button"
+              class="btn btn-secondary me-2"
+              (click)="goToPreviousTab()"
+            >
+              Back
+            </button>
+            <!-- Save & Next button -->
+            <button
+              type="button"
+              class="btn btn-primary"
+              (click)="onSaveAndNext()"
+            >
+              Save & Next
+            </button>
+          </div>
+        </form>
+      </p-tabPanel>
+  
+      <p-tabPanel
+        header="KYC Documents"
+        [disabled]="!(this.personalForm.valid && this.proffesionalInfo.valid)"
+      >
+        <h6 class="text-left">KYC Documents</h6>
+        <form [formGroup]="KYCDocuments">
+          <div class="row">
+            <div class="col-sm-12 col-md-6 mb-3">
+              <label class="form-label"
+                >Citizen Id Card No <span class="important-star">*</span></label
+              >
+              <input
+                type="text"
+                pInputText
+                formControlName="cardNo"
+                class="form-control"
+                placeholder="Enter your Citizen Id Card No"
+              />
+              <div
+                *ngIf="
+                  KYCDocuments.get('cardNo')?.invalid &&
+                  (KYCDocuments_submitted ||
+                    KYCDocuments.get('cardNo')?.dirty ||
+                    KYCDocuments.get('cardNo')?.touched)
+                "
+                class="error"
+              >
+                <small *ngIf="KYCDocuments.get('cardNo')?.errors?.['required']"
+                  >cardNo is required.</small
+                >
+              </div>
+            </div>
+            <div class="col-sm-12 col-md-6 mb-3">
+              <label class="form-label"
+                >Citizen identity <span class="important-star">*</span></label
+              >
+              <div
+                class="input-group sm-3"
+                *ngIf="!KYCDocuments.value.citizen_document"
+              >
+                <input
+                  class="form-control"
+                  autocomplete="off"
+                  type="file"
+                  (change)="
+                    uploadFiles($event, 'KYCDocuments', 'citizen_document')
+                  "
+                />
+              </div>
+              <div *ngIf="KYCDocuments.value.citizen_document">
+                <a
+                  class="text-primary cursor-pointer"
+                  (click)="viewFiles(KYCDocuments.value.citizen_document)"
+                >
+                  {{ KYCDocuments.value.citizen_document }}</a
+                >&nbsp;&nbsp;&nbsp;
+                <i
+                  class="pi pi-times-circle mt-2 text-danger cursor-pointer"
+                  (click)="removeDoc('KYCDocuments', 'citizen_document')"
+                ></i>
+              </div>
+              <div
+                *ngIf="
+                  KYCDocuments.get('citizen_document')?.invalid &&
+                  (KYCDocuments_submitted ||
+                    KYCDocuments.get('citizen_document')?.dirty ||
+                    KYCDocuments.get('citizen_document')?.touched)
+                "
+                class="error"
+              >
+                <small
+                  *ngIf="KYCDocuments.get('citizen_document')?.errors?.['required']"
+                  >citizen document is required.</small
+                >
+              </div>
+            </div>
+          </div>
+          <div class="row">
+            <div class="col-sm-12 col-md-6 mb-3">
+              <label class="form-label"
+                >Passport <span class="important-star">*</span></label
+              >
+              <input
+                type="text"
+                pInputText
+                formControlName="passport"
+                class="form-control"
+                placeholder="Enter your Passport"
+              />
+              <div
+                *ngIf="
+                  KYCDocuments.get('passport')?.invalid &&
+                  (KYCDocuments_submitted ||
+                    KYCDocuments.get('passport')?.dirty ||
+                    KYCDocuments.get('passport')?.touched)
+                "
+                class="error"
+              >
+                <small *ngIf="KYCDocuments.get('passport')?.errors?.['required']"
+                  >passport is required.</small
+                >
+              </div>
+            </div>
+            <div class="col-sm-12 col-md-6 mb-3">
+              <label class="form-label"
+                >Passport Upload <span class="important-star">*</span></label
+              >
+              <div
+                class="input-group sm-3"
+                *ngIf="!KYCDocuments.value.passport_upload"
+              >
+                <input
+                  class="form-control"
+                  autocomplete="off"
+                  type="file"
+                  (change)="
+                    uploadFiles($event, 'KYCDocuments', 'passport_upload')
+                  "
+                />
+              </div>
+              <div *ngIf="KYCDocuments.value.passport_upload">
+                <a
+                  class="text-primary cursor-pointer"
+                  (click)="viewFiles(KYCDocuments.value.passport_upload)"
+                >
+                  {{ KYCDocuments.value.passport_upload }}</a
+                >&nbsp;&nbsp;&nbsp;
+                <i
+                  class="pi pi-times-circle mt-2 text-danger cursor-pointer"
+                  (click)="removeDoc('KYCDocuments', 'passport_upload')"
+                ></i>
+              </div>
+              <div
+                *ngIf="
+                  KYCDocuments.get('passport_upload')?.invalid &&
+                  (KYCDocuments_submitted ||
+                    KYCDocuments.get('passport_upload')?.dirty ||
+                    KYCDocuments.get('passport_upload')?.touched)
+                "
+                class="error"
+              >
+                <small
+                  *ngIf="KYCDocuments.get('passport_upload')?.errors?.['required']"
+                  >passport upload document is required.</small
+                >
+              </div>
+            </div>
+          </div>
+          <div class="row">
+            <div class="col-sm-12 col-md-6 mb-3">
+              <label class="form-label"
+                >Household registration book
+                <span class="important-star">*</span></label
+              >
+              <input
+                type="text"
+                pInputText
+                formControlName="household_registration"
+                class="form-control"
+                placeholder="Enter your Household registration book"
+              />
+              <div
+                *ngIf="
+                  KYCDocuments.get('household_registration')?.invalid &&
+                  (KYCDocuments_submitted ||
+                    KYCDocuments.get('household_registration')?.dirty ||
+                    KYCDocuments.get('household_registration')?.touched)
+                "
+                class="error"
+              >
+                <small
+                  *ngIf="KYCDocuments.get('household_registration')?.errors?.['required']"
+                  >Household registration book document is required.</small
+                >
+              </div>
+            </div>
+            <div class="col-sm-12 col-md-6 mb-3">
+              <label class="form-label"
+                >Document Upload <span class="important-star">*</span></label
+              >
+              <div
+                class="input-group sm-3"
+                *ngIf="!KYCDocuments.value.registration_document"
+              >
+                <input
+                  class="form-control"
+                  autocomplete="off"
+                  type="file"
+                  (change)="
+                    uploadFiles($event, 'KYCDocuments', 'registration_document')
+                  "
+                />
+              </div>
+              <div *ngIf="KYCDocuments.value.registration_document">
+                <a
+                  class="text-primary cursor-pointer"
+                  (click)="viewFiles(KYCDocuments.value.registration_document)"
+                >
+                  {{ KYCDocuments.value.registration_document }}</a
+                >&nbsp;&nbsp;&nbsp;
+                <i
+                  class="pi pi-times-circle mt-2 text-danger cursor-pointer"
+                  (click)="removeDoc('KYCDocuments', 'registration_document')"
+                ></i>
+              </div>
+              <div
+                *ngIf="
+                  KYCDocuments.get('registration_document')?.invalid &&
+                  (KYCDocuments_submitted ||
+                    KYCDocuments.get('registration_document')?.dirty ||
+                    KYCDocuments.get('registration_document')?.touched)
+                "
+                class="error"
+              >
+                <small
+                  *ngIf="KYCDocuments.get('registration_document')?.errors?.['required']"
+                  >document upload is required.</small
+                >
+              </div>
+            </div>
+          </div>
+          <div class="row">
+            <div class="col-sm-12 col-md-6 mb-3">
+              <label class="form-label"
+                >Any government-issued ID
+                <span class="important-star">*</span></label
+              >
+              <select
+                pInputText
+                formControlName="government_issued"
+                class="form-control"
+              >
+                <option value="">-- Select Government-issued ID --</option>
+                <option value="National ID">National ID Card</option>
+                <option value="Passport">Passport</option>
+                <option value="Work Permit">Work Permit</option>
+                <option value="Driver's License">Driver’s License</option>
+              </select>
+              <div
+                *ngIf="
+                  KYCDocuments.get('government_issued')?.invalid &&
+                  (KYCDocuments_submitted ||
+                    KYCDocuments.get('government_issued')?.dirty ||
+                    KYCDocuments.get('government_issued')?.touched)
+                "
+                class="error"
+              >
+                <small
+                  *ngIf="KYCDocuments.get('government_issued')?.errors?.['required']"
+                  >Government issued ID is required.</small
+                >
+              </div>
+            </div>
+            <div class="col-sm-12 col-md-6 mb-3">
+              <label class="form-label"
+                >Document Upload <span class="important-star">*</span></label
+              >
+              <div
+                class="input-group sm-3"
+                *ngIf="!KYCDocuments.value.government_issued_doc"
+              >
+                <input
+                  class="form-control"
+                  autocomplete="off"
+                  type="file"
+                  (change)="
+                    uploadFiles($event, 'KYCDocuments', 'government_issued_doc')
+                  "
+                />
+              </div>
+              <div *ngIf="KYCDocuments.value.government_issued_doc">
+                <a
+                  class="text-primary cursor-pointer"
+                  (click)="viewFiles(KYCDocuments.value.government_issued_doc)"
+                >
+                  {{ KYCDocuments.value.government_issued_doc }}</a
+                >&nbsp;&nbsp;&nbsp;
+                <i
+                  class="pi pi-times-circle mt-2 text-danger cursor-pointer"
+                  (click)="removeDoc('KYCDocuments', 'government_issued_doc')"
+                ></i>
+              </div>
+              <div
+                *ngIf="
+                  KYCDocuments.get('government_issued_doc')?.invalid &&
+                  (KYCDocuments_submitted ||
+                    KYCDocuments.get('government_issued_doc')?.dirty ||
+                    KYCDocuments.get('government_issued_doc')?.touched)
+                "
+                class="error"
+              >
+                <small
+                  *ngIf="KYCDocuments.get('government_issued_doc')?.errors?.['required']"
+                >
+                  Document upload document is required.</small
+                >
+              </div>
+            </div>
+          </div>
+          <div class="row">
+            <div class="col-sm-12 col-md-6 mb-3">
+              <label class="form-label"
+                >ID Number <span class="important-star">*</span></label
+              >
+              <input
+                type="text"
+                pInputText
+                formControlName="idNo"
+                class="form-control"
+                placeholder="Enter your ID Number"
+              />
+              <div
+                *ngIf="
+                  KYCDocuments.get('idNo')?.invalid &&
+                  (KYCDocuments_submitted ||
+                    KYCDocuments.get('idNo')?.dirty ||
+                    KYCDocuments.get('idNo')?.touched)
+                "
+                class="error"
+              >
+                <small *ngIf="KYCDocuments.get('idNo')?.errors?.['required']"
+                  >Id number is required.</small
+                >
+              </div>
+            </div>
+            <div class="col-sm-12 col-md-6 mb-3">
+              <label class="form-label"
+                >Bank Statement for (6 months)
+                <span class="important-star">*</span></label
+              >
+              <div
+                class="input-group sm-3"
+                *ngIf="!KYCDocuments.value.bank_statement_doc"
+              >
+                <input
+                  class="form-control"
+                  autocomplete="off"
+                  type="file"
+                  (change)="
+                    uploadFiles($event, 'KYCDocuments', 'bank_statement_doc')
+                  "
+                />
+              </div>
+              <div *ngIf="KYCDocuments.value.bank_statement_doc">
+                <a
+                  class="text-primary cursor-pointer"
+                  (click)="viewFiles(KYCDocuments.value.bank_statement_doc)"
+                >
+                  {{ KYCDocuments.value.bank_statement_doc }}</a
+                >&nbsp;&nbsp;&nbsp;
+                <i
+                  class="pi pi-times-circle mt-2 text-danger cursor-pointer"
+                  (click)="removeDoc('KYCDocuments', 'bank_statement_doc')"
+                ></i>
+              </div>
+              <div
+                *ngIf="
+                  KYCDocuments.get('bank_statement_doc')?.invalid &&
+                  (KYCDocuments_submitted ||
+                    KYCDocuments.get('bank_statement_doc')?.dirty ||
+                    KYCDocuments.get('bank_statement_doc')?.touched)
+                "
+                class="error"
+              >
+                <small
+                  *ngIf="KYCDocuments.get('bank_statement_doc')?.errors?.['required']"
+                  >Bank statement doc number is required.</small
+                >
+              </div>
+            </div>
+          </div>
+  
+          <!-- Button row -->
+          <div class="d-flex justify-content-end mt-3">
+            <!-- Back button -->
+            <button
+              type="button"
+              class="btn btn-secondary me-2"
+              (click)="goToPreviousTab()"
+            >
+              Back
+            </button>
+            <!-- Save & Next button -->
+            <button
+              type="button"
+              class="btn btn-primary"
+              (click)="onSaveAndNext()"
+            >
+              {{ this.selectedCustomer?.id ? "Save" : "Save & Next" }}
+            </button>
+          </div>
+        </form>
+      </p-tabPanel>
+      <p-tabPanel
+        header="Confirmation"
+        *ngIf="!selectedCustomer?.id"
+        [disabled]="
+          !(
+            this.personalForm.valid &&
+            this.proffesionalInfo.valid &&
+            this.KYCDocuments.valid
+          )
+        "
+      >
+        <div id="customer-details">
+          <div class="main-wrapper">
+            <div class="customer-wrapper">
+              <p class="customer-heading">Basic information</p>
+            </div>
+            <div class="cus-wrapper">
+              <div class="row">
+                <div class="col-3">
+                  <p class="cus-label">Full Name</p>
+                  <p class="cus-value">{{ personalForm.value.fullName }}</p>
+                </div>
+                <!-- <div class="col-3">
+                                 <p class="cus-label">Father/ Husband </p>
+                                 <p class="cus-value">Mr. Ramaswamy</p>
+                             </div> -->
+                <div class="col-3">
+                  <p class="cus-label">Gender</p>
+                  <p class="cus-value">{{ personalForm.value.gender }}</p>
+                </div>
+                <div class="col-3">
+                  <p class="cus-label">Date of Birth</p>
+                  <p class="cus-value">{{ personalForm.value.dateOfBirth }}</p>
+                </div>
+              </div>
+              <div class="row">
+                <div class="col-3">
+                  <p class="cus-label">Mobile number</p>
+                  <p class="cus-value">{{ personalForm.value.mobileNumber }}</p>
+                </div>
+                <div class="col-3">
+                  <p class="cus-label">Email</p>
+                  <p class="cus-value">{{ personalForm.value.email }}</p>
+                </div>
+              </div>
+              <div class="row">
+                <div class="col-3">
+                  <p class="cus-label">Address</p>
+                  <p class="cus-value">{{ personalForm.value.streetAddress }}</p>
+                </div>
+                <div class="col-3">
+                  <p class="cus-label">City</p>
+                  <p class="cus-value">{{ personalForm.value.city }}</p>
+                </div>
+                <div class="col-3">
+                  <p class="cus-label">State</p>
+                  <p class="cus-value">{{ personalForm.value.state }}</p>
+                </div>
+                <div class="col-3">
+                  <p class="cus-label">Country</p>
+                  <p class="cus-value">thailand</p>
+                </div>
+              </div>
+              <div class="row">
+                <div class="col-3">
+                  <p class="cus-label">PinCode</p>
+                  <p class="cus-value">{{ personalForm.value.postalCode }}</p>
+                </div>
+              </div>
+            </div>
+          </div>
+          <div class="main-wrapper">
+            <div class="customer-wrapper">
+              <p class="customer-heading">Professional Information</p>
+            </div>
+            <div class="cus-wrapper">
+              <div class="row">
+                <div class="col-3">
+                  <p class="cus-label">Company</p>
+                  <p class="cus-value">
+                    {{ proffesionalInfo.value.companyName }}
+                  </p>
+                </div>
+                <div class="col-3">
+                  <p class="cus-label">Industry Type</p>
+                  <p class="cus-value">
+                    {{ proffesionalInfo.value.industryType }}
+                  </p>
+                </div>
+                <div class="col-3">
+                  <p class="cus-label">Designation</p>
+                  <p class="cus-value">
+                    {{ proffesionalInfo.value.designation }}
+                  </p>
+                </div>
+                <div class="col-3">
+                  <p class="cus-label">Income per Month</p>
+                  <p class="cus-value">
+                    {{ proffesionalInfo.value.incomePerMonth }}
+                  </p>
+                </div>
+              </div>
+            </div>
+          </div>
+          <div class="main-wrapper">
+            <div class="customer-wrapper">
+              <p class="customer-heading">KYC Documents</p>
+            </div>
+            <div class="cus-wrapper">
+              <div class="row">
+                <div class="col-3">
+                  <p class="cus-label">Citizen identity card No.</p>
+                  <p class="cus-value">{{ KYCDocuments.value.cardNo }}</p>
+                </div>
+                <div class="col-3">
+                  <p class="cus-label">Passport</p>
+                  <p class="cus-value">{{ KYCDocuments.value.passport }}</p>
+                </div>
+                <div class="col-3">
+                  <p class="cus-label">Household registration book</p>
+                  <p class="cus-value">
+                    {{ KYCDocuments.value.household_registration }}
+                  </p>
+                </div>
+              </div>
+              <div class="row">
+                <div class="col-3">
+                  <p class="cus-label">Any government-issued</p>
+                  <p class="cus-value">
+                    {{ KYCDocuments.value.government_issued }}
+                  </p>
+                </div>
+                <div class="col-3">
+                  <p class="cus-label">Document ID</p>
+                  <p class="cus-value">{{ KYCDocuments.value.idNo }}</p>
+                </div>
+              </div>
+            </div>
+          </div>
+          <div class="main-wrapper">
+            <div class="customer-wrapper">
+              <p class="customer-heading">Documents</p>
+            </div>
+            <div class="cus-wrapper">
+              <div class="row">
+                <div class="col-3">
+                  <p class="cus-label">Bank Statement for 6 month</p>
+                  <div class="img-wrapper">
+                    <div class="image">
+                      <img src="../../../assets/images/file.svg" alt="file" />
+                    </div>
+                    <div class="content">
+                      <span class="img-name">Household registration ..jpg</span>
+                      <span class="img-size">1.2 MB</span>
+                    </div>
+                    <div>
+                      <span
+                        class="view"
+                        (click)="viewFiles(KYCDocuments.value.bank_statement_doc)"
+                        >View</span
+                      >
+                    </div>
+                  </div>
+                </div>
+                <div class="col-3">
+                  <p class="cus-label">Household registration book</p>
+                  <div class="img-wrapper">
+                    <div class="image">
+                      <img src="../../../assets/images/file.svg" alt="file" />
+                    </div>
+                    <div class="content">
+                      <span class="img-name">Household registration ..jpg</span>
+                      <span class="img-size">1.2 MB</span>
+                    </div>
+                    <div>
+                      <span
+                        class="view"
+                        (click)="
+                          viewFiles(KYCDocuments.value.household_registration)
+                        "
+                        >View</span
+                      >
+                    </div>
+                  </div>
+                </div>
+                <div class="col-3">
+                  <p class="cus-label">Passport</p>
+                  <div class="img-wrapper">
+                    <div class="image">
+                      <img src="../../../assets/images/file.svg" alt="file" />
+                    </div>
+                    <div class="content">
+                      <span class="img-name">Household registration ..jpg</span>
+                      <span class="img-size">1.2 MB</span>
+                    </div>
+                    <div>
+                      <span
+                        class="view"
+                        (click)="viewFiles(KYCDocuments.value.passport_upload)"
+                        >View</span
+                      >
+                    </div>
+                  </div>
+                </div>
+                <div class="col-3">
+                  <p class="cus-label">Any government ID</p>
+                  <div class="img-wrapper">
+                    <div class="image">
+                      <img src="../../../assets/images/file.svg" alt="file" />
+                    </div>
+                    <div class="content">
+                      <span class="img-name">Household registration ..jpg</span>
+                      <span class="img-size">1.2 MB</span>
+                    </div>
+                    <div>
+                      <span
+                        class="view"
+                        (click)="
+                          viewFiles(KYCDocuments.value.government_issued_doc)
+                        "
+                        >View</span
+                      >
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+          <div class="d-flex justify-content-end mt-3">
+            <!-- Back button -->
+            <button
+              type="button"
+              class="btn btn-secondary me-2"
+              (click)="goToPreviousTab()"
+            >
+              Back
+            </button>
+            <!-- Save & Next button -->
+            <!-- <button type="button" class="btn btn-primary" (click)="submitForm()">
+              Confirm
+            </button>  -->
+            <button 
+          pButton 
+          pRipple 
+          label="Confirm" 
+          [raised]="true"
+          (click)="submitForm()"
+          class="p-button-success add-btn">
+      </button>
+          </div>
+        </div>
+      </p-tabPanel>
+    </p-tabView>
+  </div>
+
+  <p-dialog
+  header="Confimation"
+  [modal]="true"
+  [(visible)]="rejectvisible"
+  [style]="{ width: '50rem' }"
+  [breakpoints]="{ '1199px': '75vw', '575px': '90vw' }"
+  [draggable]="false"
+>
+  <p class="modal-text">Are you sure you want to Delete?</p>
+  <ng-template pTemplate="footer">
+    <div class="delete-wrapper">
+      <p-button class="cancel-btn" (onClick)="rejectCancel()" label="Cancel" />
+      <p-button class="create-btn" (onClick)="reject()" label="Delete" />
+    </div>
+  </ng-template>
+</p-dialog>
+  

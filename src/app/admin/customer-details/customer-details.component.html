@@ -1,0 +1,202 @@
+
+
+<div id="cus-data">
+  
+    <div class="back-wrapper">
+        <i class="pi pi-chevron-left back-icon" (click)="back()" style="color: slateblue"></i>
+        <p>Back</p>
+    </div>
+
+  <div class="cus-wrapper">
+    <div class="cus-card">
+      <div class="image-wrapper">
+        <img [src]="childData.profilePhoto"/>
+      </div>
+      <div class="content-wrapper">
+        <p class="cus-name">{{childData.fullName}}</p>
+        <p class="cus-id">
+          Customer ID: <span class="customer-data">{{childData.customer_id}}</span>
+        </p>
+      </div>
+    </div>
+  </div>
+</div>
+
+<div id="customer-details">
+    <div class="main-wrapper">
+       <div class="customer-wrapper">
+           <p class="customer-heading">Basic information</p>
+       </div>
+       <div class="cus-wrapper">
+           <div class="row">
+               <div class="col-3">
+                   <p class="cus-label">Full Name</p>
+                   <p class="cus-value">{{childData.fullName}}</p>
+               </div>
+               <!-- <div class="col-3">
+                   <p class="cus-label">Father/ Husband </p>
+                   <p class="cus-value">Mr. Ramaswamy</p>
+               </div> -->
+               <div class="col-3">
+                   <p class="cus-label">Gender </p>
+                   <p class="cus-value">{{childData.gender}}</p>
+               </div>
+               <div class="col-3">
+                   <p class="cus-label">Date of Birth</p>
+                   <p class="cus-value">{{childData.dateOfBirth}}</p>
+               </div>
+           </div>
+           <div class="row">
+               <div class="col-3">
+                   <p class="cus-label">Mobile number</p>
+                   <p class="cus-value">{{childData.mobileNumber}}</p>
+               </div>
+               <div class="col-3">
+                   <p class="cus-label">Email </p>
+                   <p class="cus-value">{{childData.email}}</p>
+               </div>
+               <div class="col-3">
+                <p class="cus-label">Address</p>
+                <p class="cus-value">{{childData.streetAddress}}</p>
+            </div>
+           </div>
+           <div class="row">
+               <div class="col-3">
+                   <p class="cus-label">City </p>
+                   <p class="cus-value">{{childData.city}}</p>
+               </div>
+               <div class="col-3">
+                   <p class="cus-label">State </p>
+                   <p class="cus-value">{{childData.state}}</p>
+               </div>
+               <div class="col-3">
+                   <p class="cus-label">Country</p>
+                   <p class="cus-value">India</p>
+               </div>
+           </div>
+           <div class="row">
+               <div class="col-3">
+                   <p class="cus-label">PinCode</p>
+                   <p class="cus-value">{{childData.postalCode}}</p>
+               </div>
+           </div>
+       </div>
+    </div>
+    <div class="main-wrapper">
+       <div class="customer-wrapper">
+           <p class="customer-heading">Professional Information</p>
+       </div>
+       <div class="cus-wrapper">
+           <div class="row">
+               <div class="col-3">
+                   <p class="cus-label">Company</p>
+                   <p class="cus-value">{{childData.companyName}}</p>
+               </div>
+               <div class="col-3">
+                   <p class="cus-label">Industry Type  </p>
+                   <p class="cus-value">{{childData.industryType}}</p>
+               </div>
+               <div class="col-3">
+                   <p class="cus-label">Designation </p>
+                   <p class="cus-value">{{childData.designation}}</p>
+               </div>
+               <div class="col-3">
+                   <p class="cus-label">Income per Month</p>
+                   <p class="cus-value">{{childData.incomePerMonth}}</p>
+               </div>
+           </div>
+       </div>
+    </div>
+    <div class="main-wrapper">
+       <div class="customer-wrapper">
+           <p class="customer-heading"> KYC Documents </p>
+       </div>
+       <div class="cus-wrapper">
+           <div class="row">
+               <div class="col-3">
+                   <p class="cus-label">Citizen identity card No.</p>
+                   <p class="cus-value">{{childData.cardNo}}</p>
+               </div>
+               <div class="col-3">
+                   <p class="cus-label">Passport </p>
+                   <p class="cus-value">{{childData.passport}}</p>
+               </div>
+               <div class="col-3">
+                   <p class="cus-label">Household registration book </p>
+                   <p class="cus-value">{{childData.household_registration}}</p>
+               </div>
+           </div>
+           <div class="row">
+               <div class="col-3">
+                   <p class="cus-label">Any government-issued </p>
+                   <p class="cus-value">{{childData.government_issued}}</p>
+               </div>
+               <div class="col-3">
+                   <p class="cus-label">Document ID </p>
+                   <p class="cus-value">{{childData.idNo}}</p>
+               </div>
+           </div>
+       </div>
+    </div>
+    <div class="main-wrapper">
+       <div class="customer-wrapper">
+           <p class="customer-heading"> Documents </p>
+       </div>
+       <div class="cus-wrapper">
+           <div class="row">
+               <div class="col-3">
+                   <p class="cus-label">Bank Statement for 6 month</p>
+                   <div class="img-wrapper">
+                       <div class="image"><img src="/images/file.svg" alt="file"></div>
+                       <div class="content">
+                           <span class="img-name">Household registration ..jpg</span>
+                           <span class="img-size">1.2 MB</span>
+                       </div>
+                       <div>
+                           <span  class="view">View</span>
+                       </div>
+                   </div>
+               </div>
+               <div class="col-3">
+                   <p class="cus-label">Household registration book </p>
+                   <div class="img-wrapper">
+                       <div class="image"><img src="/images/file.svg" alt="file"></div>
+                       <div class="content">
+                           <span class="img-name">Household registration ..jpg</span>
+                           <span class="img-size">1.2 MB</span>
+                       </div>
+                       <div>
+                           <span  class="view">View</span>
+                       </div>
+                   </div>
+               </div>
+               <div class="col-3">
+                   <p class="cus-label">Passport </p>
+                   <div class="img-wrapper">
+                       <div class="image"><img src="/images/file.svg" alt="file"></div>
+                       <div class="content">
+                           <span class="img-name">Household registration ..jpg</span>
+                           <span class="img-size">1.2 MB</span>
+                       </div>
+                       <div>
+                           <span  class="view">View</span>
+                       </div>
+                   </div>
+               </div>
+               <div class="col-3">
+                   <p class="cus-label">Any government ID </p>
+                   <div class="img-wrapper">
+                       <div class="image"><img src="/images/file.svg" alt="file"></div>
+                       <div class="content">
+                           <span class="img-name">Household registration ..jpg</span>
+                           <span class="img-size">1.2 MB</span>
+                       </div>
+                       <div>
+                           <span  class="view">View</span>
+                       </div>
+                   </div>
+               </div>
+           </div>
+       </div>
+    </div>
+   </div>

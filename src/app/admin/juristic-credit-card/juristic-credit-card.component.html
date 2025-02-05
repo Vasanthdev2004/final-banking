@@ -1,0 +1,260 @@
+<div class="m-4" *ngIf="!showForm">
+    <!-- <h6 class="text-left">Juristic Person</h6> -->
+    <br />
+    <p-table #dt2 [value]="filteredProducts" responsiveLayout="stack" [globalFilterFields]="['fullName','customer_id','std_class','std_sec','status']" [breakpoint]="'960px'"
+        [tableStyle]="{'min-width': '50rem'}" class="p-table">
+        <ng-template pTemplate="caption">
+          <div class="row">
+              <div class="col-md-3">
+                  <span class="p-input-icon-left mx-2 mb-2 w-100">
+                      <i class="pi pi-search"></i>
+                      <input pInputText type="text"
+                          (input)="dt2.filterGlobal($event.target.value, 'contains')"
+                          placeholder="Search" class="w-100 ps-5" />
+                  </span>
+              </div>
+          </div>
+      </ng-template>
+      <ng-template pTemplate="header" let-columns>
+        <tr>
+          <th>Juristic Id</th>
+          <th>Customer Name</th>
+          <th>Mobile Number</th>
+          <th>Email</th>
+          <th>Company</th>
+          <th>Designation</th>
+          <th>Actions</th>
+          <!-- New column for actions -->
+        </tr>
+      </ng-template>
+      <ng-template
+        pTemplate="body"
+        let-product
+        let-columns="columns"
+        let-rowIndex="rowIndex"
+      >
+        <tr>
+          <td>
+            <span class="p-column-title">Customer Id</span>{{  product.customer_id }}
+          </td>
+          <td>
+            <span class="p-column-title">Customer Name</span
+            >{{ product.fullName }}
+          </td>
+          <td>
+            <span class="p-column-title">Mobile Number</span
+            >{{ product.mobileNumber }}
+          </td>
+          <td><span class="p-column-title">Email</span>{{ product.email }}</td>
+          <td>
+            <span class="p-column-title">Company</span>{{ product.companyName }}
+          </td>
+          <td>
+            <span class="p-column-title">Designation</span
+            >{{ product.designation }}
+          </td>
+          <td>
+            <button (click)="openAddJuristicPersonDialog( product.customer_id)" class="btn btn-success">
+                Apply Credit Card
+            </button>
+            <p-confirmDialog
+              header="Confirmation"
+              icon="pi pi-exclamation-triangle"
+              acceptLabel="Yes"
+              rejectLabel="No"
+            ></p-confirmDialog>
+          </td>
+        </tr>
+      </ng-template>
+    </p-table>
+  </div>
+  
+  <div class="m-4" *ngIf="showForm">
+    <!-- <div class="d-flex">
+      <div>
+        <h6 class="text-left">Create New Juristic Person</h6>
+      </div>
+      <div class="ms-5">
+        <button (click)="backToList()" class="btn btn-warning">
+          Back to List
+        </button>
+      </div>
+    </div> -->
+    <div class="back-wrapper">
+      <i class="pi pi-chevron-left back-icon" (click)="back()" style="color: slateblue"></i>
+      <p>Back</p>
+  </div>
+    <p-tabView [(activeIndex)]="activeIndex">
+      <p-tabPanel
+      header="Card Details"
+      [disabled]="
+        !(
+          this.creditCard.valid 
+        )
+      "
+    >
+      <h6 class="text-left">Card Details</h6>
+      <form [formGroup]="creditCard" (ngSubmit)="onSaveAndNext()">
+        <div class="row">
+          <div class="col-sm-12 col-md-6 mb-3">
+            <label class="form-label"
+              >Annual Income Range<span class="important-star">*</span></label
+            >
+  
+            <select formControlName="annualIncome" class="form-control">
+              <option value="">-- Select Annual Income Range --</option>
+              <option value="below-50000">Below ฿50,000</option>
+              <option value="50000-100000">฿50,000 - ฿100,000</option>
+              <option value="100000-200000">฿100,000 - ฿200,000</option>
+              <option value="200000-500000">฿200,000 - ฿500,000</option>
+              <option value="500000-1000000">฿500,000 - ฿1,000,000</option>
+              <option value="above-1000000">Above ฿1,000,000</option>
+            </select>
+  
+            <div
+              *ngIf="
+                creditCard.get('annualIncome')?.invalid &&
+                (card_submitted ||
+                  creditCard.get('annualIncome')?.dirty ||
+                  creditCard.get('annualIncome')?.touched)
+              "
+              class="error"
+            >
+              <small *ngIf="creditCard.get('annualIncome')?.errors?.['required']"
+                >Annual Income Range is required.</small
+              >
+            </div>
+          </div>
+  
+          <div class="col-sm-12 col-md-6 mb-3">
+            <label class="form-label"
+              >Purpose of Credit Card <span class="important-star">*</span></label
+            >
+  
+            <select formControlName="creditCardPurpose" class="form-control">
+              <option value="">-- Select Purpose --</option>
+              <option value="personal-expenses">Personal Expenses</option>
+              <option value="online-shopping">Online Shopping</option>
+              <option value="travel">Travel</option>
+              <option value="emergency">Emergency</option>
+              <option value="bill-payments">Bill Payments</option>
+              <option value="investment">Investment</option>
+              <option value="other">Other</option>
+            </select>
+            <div
+              *ngIf="
+                creditCard.get('creditCardPurpose')?.invalid &&
+                (card_submitted ||
+                  creditCard.get('creditCardPurpose')?.dirty ||
+                  creditCard.get('creditCardPurpose')?.touched)
+              "
+              class="error"
+            >
+              <small
+                *ngIf="creditCard.get('creditCardPurpose')?.errors?.['required']"
+                >Purpose of Credit Card is required.</small
+              >
+            </div>
+          </div>
+        </div>
+  
+        <div class="row">
+          <div class="col-sm-12 col-md-12 mb-3">
+            <label class="form-label"
+              >Credit Limit<span class="important-star">*</span></label
+            >
+  
+            <input
+              type="text"
+              pInputText
+              formControlName="creditLimit"
+              class="form-control"
+              placeholder="Enter creditLimit"
+            />
+  
+            <div
+              *ngIf="
+                creditCard.get('creditLimit')?.invalid &&
+                (card_submitted ||
+                  creditCard.get('creditLimit')?.dirty ||
+                  creditCard.get('creditLimit')?.touched)
+              "
+              class="error"
+            >
+              <small *ngIf="creditCard.get('creditLimit')?.errors?.['required']"
+                >Credit Limit is required.</small
+              >
+            </div>
+          </div>
+        </div>
+  
+        <div class="d-flex justify-content-end mt-3">
+          <button
+            type="button"
+            class="btn btn-secondary me-2"
+            (click)="goToPreviousTab()"
+          >
+            Back
+          </button>
+          <button type="button" class="btn btn-primary" (click)="onSaveAndNext()">
+            Save & Next
+          </button>
+        </div>
+      </form>
+    </p-tabPanel>
+  
+  
+      <p-tabPanel
+        header="Confirmation"
+        *ngIf="!selectedCustomer?.id"
+        [disabled]="
+          !(
+            this.creditCard.valid 
+          )
+        "
+      >
+        <div id="customer-details">
+          <div class="main-wrapper">
+            <div class="customer-wrapper">
+              <p class="customer-heading">Credit Card information</p>
+            </div>
+            <div class="cus-wrapper">
+              <div class="row">
+                <div class="col-3">
+                  <p class="cus-label">Annual Income</p>
+                  <p class="cus-value">{{ creditCard.value.annualIncome }}</p>
+                </div>
+                <div class="col-3">
+                  <p class="cus-label">Credit Limit</p>
+                  <p class="cus-value">{{ creditCard.value.creditLimit}}</p>
+                </div>
+              </div>
+              <div class="row">
+                <div class="col-3">
+                  <p class="cus-label">credit Card Purpose</p>
+                  <p class="cus-value">{{ creditCard.value.creditCardPurpose }}</p>
+                </div>
+              </div>
+            </div>
+          </div>
+  
+  
+          <div class="d-flex justify-content-end mt-3">
+            <!-- Back button -->
+            <button
+              type="button"
+              class="btn btn-secondary me-2"
+              (click)="goToPreviousTab()"
+            >
+              Back
+            </button>
+            <!-- Save & Next button -->
+            <button type="button" class="btn btn-primary" (click)="submitForm()">
+              Confirm
+            </button>
+          </div>
+        </div>
+      </p-tabPanel>
+    </p-tabView>
+  </div>
+  

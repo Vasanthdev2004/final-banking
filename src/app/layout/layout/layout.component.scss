@@ -1,0 +1,142 @@
+.sidebar {
+    width: 250px;
+    height: 100vh;
+    background-color: #27375d;
+    padding: 20px;
+    position: fixed;
+    top: 0;
+  }
+  
+  .sidebar .menu-name {
+    font-size: 20px;
+    font-weight: bold;
+    margin-bottom: 20px;
+    color: white;
+  }
+  
+  .sidebar ul {
+    list-style-type: none;
+    padding: 0;
+  }
+  
+  .sidebar ul li {
+    display: flex;
+    align-items: center;
+    gap: 5px;
+    padding: 8px;
+    border-radius: 4px; /* Add border-radius for rounded corners */
+    transition: background-color 0.3s ease;
+    margin: 10px 0px;
+    cursor: pointer;
+  }
+  
+  .sidebar ul li a {
+    color: white;
+    text-decoration: none;
+    font-size: 14px;
+  }
+  
+  /* Hover effect */
+  .sidebar ul li:hover {
+    background-color: #FD7401; /* Background color on hover */
+  }
+  
+  .content {
+    margin-left: 240px;
+    padding: 20px;
+    margin-top: 0;
+  }
+  
+  .dashboard-container {
+    margin-top: 0;
+    margin-left: 270px;
+  }
+  
+  .top-menu {
+    width: calc(100% - 250px);
+    height: 60px;
+    background-color: #fff;
+    box-shadow: 0px 2px 4px -1px rgba(0, 0, 0, 0.2), 0px 4px 5px 0px rgba(0, 0, 0, 0.14), 0px 1px 10px 0px rgba(0, 0, 0, 0.12);
+    display: flex;
+    justify-content: space-between;
+    padding: 10px 20px;
+    color: black;
+    position: fixed;
+    top: 0;
+    left: 250px;
+    z-index: 1000;
+    align-items: center;
+  }
+  
+  .menu-icons i {
+    margin-left: 20px;
+    cursor: pointer;
+  }
+  
+  .sidebar-icon {
+    font-size: 10px; /* Adjust the icon size as needed */
+    width: 20px;
+    height: 20px;
+  }
+
+  .user-photo {
+    width: 40px;
+    height: 40px;
+    border-radius: 50%;
+    object-fit: cover;
+  }
+
+  .sidebar-item {
+    position: relative;
+}
+
+.has-submenu .submenu {
+    display: none;
+    padding-left: 15px;
+    list-style-type: none;
+}
+
+.has-submenu:hover .submenu {
+    display: block; /* Show submenu on hover */
+}
+
+.submenu-item a {
+    color: #333; /* Customize as needed */
+    text-decoration: none;
+    padding: 5px 0;
+    display: block;
+}
+
+.submenu-item a:hover {
+    color: #007bff; /* Hover color */
+}
+
+.dropdown-item:hover {
+  background-color: #FD7401; /* Orange background color on hover */
+  color: white; /* Change text color to white on hover */
+}
+
+.dropdown-submenu {
+  position: relative;
+}
+
+.dropdown-submenu .dropdown-menu {
+  top: 0;
+  left: 100%;
+  margin-top: -1px;
+}
+
+.page-name {
+  font-size:20px;
+  font-weight: 400;
+}
+
+
+.sidebar ul li.active {
+  background-color: #ff8c00; /* Your desired background color */
+}
+
+.sidebar ul li.active a {
+  color: #ffffff; /* Ensure the text contrasts with the background */
+}
+

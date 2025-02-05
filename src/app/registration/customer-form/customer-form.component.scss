@@ -1,0 +1,103 @@
+#customer-form{
+    padding:30px;
+
+    .customer-back-wrapper{
+        background-color:#27375d;
+        padding: 10px;
+        text-align: center;
+        .heading{
+            color: #ffffff;
+            font-size: 20px;
+            font-weight: 500;
+        }
+    }
+    .back-wrapper{
+        display: flex;
+        align-items: baseline;
+        gap:10px;
+        padding: 10px 0px;
+        .back-name{
+            display: flex;
+            align-items: baseline;
+        }
+        .customer-name{
+            font-size:20px;
+            text-decoration: underline;
+        }
+        .back-icon{
+            padding: 10px;
+            border-radius: 50%;
+            cursor: pointer;
+            &:hover{
+            background-color: #efefef;
+            }
+        }
+    }
+
+    .customer-heading{
+        color: #101828;
+        font-size: 14px;
+        font-weight: 500;
+        line-height: 24px;
+        background-color: #D0D5DD;
+        padding: 10px 0px 10px 4px;
+      }
+      .cus-label{
+        color: #475467;
+        font-size: 13px;
+        font-weight: 400;
+        line-height: 15.23px;
+      
+      }
+      .cus-value{
+        color: #111827;
+        font-size: 14px;
+        font-weight: 500;
+        line-height: 20px;
+      
+      }
+      .img-wrapper{
+        display: flex;
+        align-items: center;
+        border: 1px solid #E4E7EC;
+        border-radius: 8px;
+        gap: 20px;
+        padding: 4px;
+      
+      }
+      .content{
+      display: flex;
+      flex-direction: column;
+      }
+      .view{
+        color: #175CD3;
+        font-size: 14px;
+        font-weight: 500;
+        line-height: 20px;
+        cursor: pointer;
+      }
+      
+      .img-name{
+        color: #344054;
+        font-size: 12px;
+        font-weight: 500;
+        line-height: 18px;
+      }
+      .img-size{
+        color: #475467;
+        font-size: 12px;
+        font-weight: 400;
+        line-height: 18px;
+        text-align: left;
+      
+      }
+      
+      .main-image{
+        display: flex;
+        justify-content: space-between;
+      }
+}
+
+.important-star{
+      color: red;
+}

@@ -324,7 +324,7 @@ export class CustomerFormComponent {
             const binaryData = fileReader.result as ArrayBuffer;
             
             this.http
-              .post('http://13.232.224.31/api/upload', binaryData, {
+              .post('http://13.232.19.32/api/upload', binaryData, {
                 headers: {
                   'Content-Type': fileType,
                   'X-Filename': filenameWithTimestamp,

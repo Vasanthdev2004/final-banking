@@ -11,16 +11,16 @@
         <span class="sidebar-text">Dashboard</span>
       </a>
     </li>
-    <li routerLinkActive="active" *ngIf="id && isEmail(id)" routerLink="/juristic-person-management">
-      <a>
-        <i class="sidebar-icon fas fa-user-tie"></i>
-        <span class="sidebar-text">Juristic Person</span>
-      </a>
-    </li>
     <li routerLinkActive="active" *ngIf="id && isEmail(id)" routerLink="/request">
       <a>
         <i class="sidebar-icon fas fa-envelope"></i>
         <span class="sidebar-text">Request</span>
+      </a>
+    </li>
+    <li routerLinkActive="active" *ngIf="id && isEmail(id)" routerLink="/juristic-person-management">
+      <a>
+        <i class="sidebar-icon fas fa-user-tie"></i>
+        <span class="sidebar-text">Juristic Person</span>
       </a>
     </li>
     <li routerLinkActive="active" *ngIf="id && isEmail(id)" routerLink="/customer-management">

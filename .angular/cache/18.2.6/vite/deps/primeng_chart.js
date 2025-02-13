@@ -2,7 +2,7 @@ import {
   CommonModule,
   NgStyle,
   isPlatformBrowser
-} from "./chunk-U426TETJ.js";
+} from "./chunk-U5JYJ57L.js";
 import {
   ChangeDetectionStrategy,
   Component,
@@ -29,12 +29,12 @@ import {
   ɵɵlistener,
   ɵɵproperty,
   ɵɵpureFunction2
-} from "./chunk-OCQQPHNC.js";
+} from "./chunk-PPI226VT.js";
 import "./chunk-FDESMX7I.js";
 import {
   __spreadProps,
   __spreadValues
-} from "./chunk-WDMUDEB6.js";
+} from "./chunk-3OV72XIM.js";
 
 // node_modules/@kurkle/color/dist/color.esm.js
 function round(v) {

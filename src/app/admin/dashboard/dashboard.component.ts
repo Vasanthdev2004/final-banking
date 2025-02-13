@@ -31,6 +31,7 @@ export class DashboardComponent {
   loanReqDashboard: any = {};
   creditReqDashboard: any = {};
   totalCustomerList: number = 0;
+requestDashboard: any;
 
 
   constructor(private adminService:AdminService){}

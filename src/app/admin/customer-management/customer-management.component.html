@@ -178,28 +178,54 @@
         <form [formGroup]="personalForm">
           <div class="row">
             <div class="col-sm-12 col-md-6 mb-3">
-              <label class="form-label"
-                >Full Name <span class="important-star">*</span></label
-              >
-              <input
-                type="text"
-                pInputText
-                formControlName="fullName"
-                class="form-control"
-                placeholder="Enter your full name"
-              />
-              <div
-                *ngIf="
-                  personalForm.get('fullName')?.invalid &&
-                  (personalForm.get('fullName')?.touched ||
-                    personalForm.get('fullName')?.dirty)
-                "
-                class="error"
-              >
-                <small *ngIf="personalForm.get('fullName')?.errors?.['required']"
-                  >FullName is required.</small
-                >
-              </div>
+              <!-- First Name -->
+                  <label class="form-label"
+                  >First Name <span class="important-star">*</span></label
+                  >
+                  <input
+                  type="text"
+                  pInputText
+                  formControlName="firstName"
+                  class="form-control"
+                  placeholder="Enter your first name"
+                  />
+                  <div
+                  *ngIf="
+                    personalForm.get('firstName')?.invalid &&
+                    (personalForm.get('firstName')?.touched ||
+                      personalForm.get('firstName')?.dirty)
+                  "
+                  class="error"
+                  >
+                  <small *ngIf="personalForm.get('firstName')?.errors?.['required']"
+                    >First Name is required.</small
+                  >
+                  </div>
+
+                  <!-- Last Name -->
+                  <label class="form-label"
+                  >Last Name <span class="important-star">*</span></label
+                  >
+                  <input
+                  type="text"
+                  pInputText
+                  formControlName="lastName"
+                  class="form-control"
+                  placeholder="Enter your last name"
+                  />
+                  <div
+                  *ngIf="
+                    personalForm.get('lastName')?.invalid &&
+                    (personalForm.get('lastName')?.touched ||
+                      personalForm.get('lastName')?.dirty)
+                  "
+                  class="error"
+                  >
+                  <small *ngIf="personalForm.get('lastName')?.errors?.['required']"
+                    >Last Name is required.</small
+                  >
+                  </div>
+
             </div>
             <div class="col-sm-12 col-md-6 mb-3">
               <label class="form-label"
@@ -284,8 +310,8 @@
                   formControlName="mobileNumber"
                   class="form-control"
                   placeholder="Enter your mobile number"
-                  maxlength="10"
-                  minlength="10"
+                  maxlength="9"
+                  minlength="9"
                   pattern="[0-9]*"
                 />
               </div>
@@ -531,128 +557,166 @@
       </p-tabPanel>
   
       <p-tabPanel
-        header="Professional Information"
-        [disabled]="!this.personalForm.valid"
+  header="Professional Information"
+  [disabled]="!this.personalForm.valid"
+>
+  <h6 class="text-left">Professional Information</h6>
+  <form [formGroup]="proffesionalInfo">
+    <div class="row">
+      <!-- Employment Type -->
+      <div class="col-sm-12 col-md-12 mb-3">
+        <label class="form-label"
+          >Employment Type <span class="important-star">*</span></label
+        >
+        <select
+          pInputText
+          formControlName="employmentType"
+          class="form-control"
+        >
+          <option value="">-- Select Employment Type --</option>
+          <option value="salaried">Salaried</option>
+          <option value="selfEmployed">Self-Employed</option>
+        </select>
+        <div
+          *ngIf="
+            proffesionalInfo.get('employmentType')?.invalid &&
+            (proffesionalInfo_submitted ||
+              proffesionalInfo.get('employmentType')?.touched ||
+              proffesionalInfo.get('employmentType')?.dirty)
+          "
+          class="error"
+        >
+          <small
+            *ngIf="proffesionalInfo.get('employmentType')?.errors?.['required']"
+            >Employment Type is required.</small
+          >
+        </div>
+      </div>
+
+      <!-- Company Name (Shown only for Salaried Employees) -->
+      <div
+        class="col-sm-12 col-md-12 mb-3"
+        *ngIf="proffesionalInfo.get('employmentType')?.value === 'salaried'"
       >
-        <h6 class="text-left">Professional Information</h6>
-        <form [formGroup]="proffesionalInfo">
-          <div class="row">
-            <div class="col-sm-12 col-md-12 mb-3">
-              <label class="form-label"
-                >Company Name <span class="important-star">*</span></label
-              >
-              <input
-                type="text"
-                pInputText
-                formControlName="companyName"
-                class="form-control"
-                placeholder="Enter Company Name"
-              />
-              <div
-                *ngIf="
-                  proffesionalInfo.get('companyName')?.invalid &&
-                  (proffesionalInfo_submitted ||
-                    proffesionalInfo.get('companyName')?.touched ||
-                    proffesionalInfo.get('companyName')?.dirty)
-                "
-                class="error"
-              >
-                <small
-                  *ngIf="proffesionalInfo.get('companyName')?.errors?.['required']"
-                  >companyName is required.</small
-                >
-              </div>
-            </div>
-          </div>
-          <div class="col-sm-12 col-md-12 mb-3">
-            <label class="form-label"
-              >Industry Type <span class="important-star">*</span></label
-            >
-  
-            <select
-              pInputText
-              formControlName="industryType"
-              class="form-control"
-            >
-              <option value="">-- Select Industry Type --</option>
-              <option value="IT">Information Technology (IT)</option>
-              <option value="Healthcare">Healthcare</option>
-              <option value="Finance">Finance and Banking</option>
-              <option value="Manufacturing">Manufacturing</option>
-              <option value="Education">Education</option>
-              <option value="Construction">Construction and Real Estate</option>
-              <option value="Other">Other</option>
-            </select>
-            <div
-              *ngIf="
-                proffesionalInfo.get('industryType')?.invalid &&
-                (proffesionalInfo_submitted ||
-                  proffesionalInfo.get('industryType')?.dirty ||
-                  proffesionalInfo.get('industryType')?.touched)
-              "
-              class="error"
-            >
-              <small
-                *ngIf="proffesionalInfo.get('industryType')?.errors?.['required']"
-                >Industry Type is required.</small
-              >
-            </div>
-          </div>
-  
-          <div class="row">
-            <div class="col-sm-12 col-md-6 mb-3">
-              <label class="form-label"
-                >Designation <span class="important-star">*</span></label
-              >
-              <input
-                type="text"
-                pInputText
-                formControlName="designation"
-                class="form-control"
-                placeholder="Enter Designation"
-              />
-              <div
-                *ngIf="
-                  proffesionalInfo.get('designation')?.invalid &&
-                  (proffesionalInfo_submitted ||
-                    proffesionalInfo.get('designation')?.touched ||
-                    proffesionalInfo.get('designation')?.dirty)
-                "
-                class="error"
-              >
-                <small
-                  *ngIf="proffesionalInfo.get('designation')?.errors?.['required']"
-                  >designation is required.</small
-                >
-              </div>
-            </div>
-            <div class="col-sm-12 col-md-6 mb-3">
-              <label class="form-label"
-                >Income Per Month <span class="important-star">*</span></label
-              >
-              <input
-                type="text"
-                pInputText
-                formControlName="incomePerMonth"
-                class="form-control"
-                placeholder="Enter Income"
-              />
-              <div
-                *ngIf="
-                  proffesionalInfo.get('incomePerMonth')?.invalid &&
-                  (proffesionalInfo_submitted ||
-                    proffesionalInfo.get('incomePerMonth')?.touched ||
-                    proffesionalInfo.get('incomePerMonth')?.dirty)
-                "
-                class="error"
-              >
-                <small
-                  *ngIf="proffesionalInfo.get('incomePerMonth')?.errors?.['required']"
-                  >IncomePerMonth is required.</small
-                >
-              </div>
-            </div>
-          </div>
+        <label class="form-label"
+          >Company Name <span class="important-star">*</span></label
+        >
+        <input
+          type="text"
+          pInputText
+          formControlName="companyName"
+          class="form-control"
+          placeholder="Enter Company Name"
+        />
+        <div
+          *ngIf="
+            proffesionalInfo.get('companyName')?.invalid &&
+            (proffesionalInfo_submitted ||
+              proffesionalInfo.get('companyName')?.touched ||
+              proffesionalInfo.get('companyName')?.dirty)
+          "
+          class="error"
+        >
+          <small
+            *ngIf="proffesionalInfo.get('companyName')?.errors?.['required']"
+            >Company Name is required.</small
+          >
+        </div>
+      </div>
+    </div>
+
+    <!-- Industry Type -->
+    <div class="col-sm-12 col-md-12 mb-3">
+      <label class="form-label"
+        >Industry Type <span class="important-star">*</span></label
+      >
+      <select
+        pInputText
+        formControlName="industryType"
+        class="form-control"
+      >
+        <option value="">-- Select Industry Type --</option>
+        <option value="IT">Information Technology (IT)</option>
+        <option value="Healthcare">Healthcare</option>
+        <option value="Finance">Finance and Banking</option>
+        <option value="Manufacturing">Manufacturing</option>
+        <option value="Education">Education</option>
+        <option value="Construction">Construction and Real Estate</option>
+        <option value="Other">Other</option>
+      </select>
+      <div
+        *ngIf="
+          proffesionalInfo.get('industryType')?.invalid &&
+          (proffesionalInfo_submitted ||
+            proffesionalInfo.get('industryType')?.dirty ||
+            proffesionalInfo.get('industryType')?.touched)
+        "
+        class="error"
+      >
+        <small
+          *ngIf="proffesionalInfo.get('industryType')?.errors?.['required']"
+          >Industry Type is required.</small
+        >
+      </div>
+    </div>
+
+    <div class="row">
+      <!-- Designation -->
+      <div class="col-sm-12 col-md-6 mb-3">
+        <label class="form-label"
+          >Designation <span class="important-star">*</span></label
+        >
+        <input
+          type="text"
+          pInputText
+          formControlName="designation"
+          class="form-control"
+          placeholder="Enter Designation"
+        />
+        <div
+          *ngIf="
+            proffesionalInfo.get('designation')?.invalid &&
+            (proffesionalInfo_submitted ||
+              proffesionalInfo.get('designation')?.touched ||
+              proffesionalInfo.get('designation')?.dirty)
+          "
+          class="error"
+        >
+          <small
+            *ngIf="proffesionalInfo.get('designation')?.errors?.['required']"
+            >Designation is required.</small
+          >
+        </div>
+      </div>
+
+      <!-- Annual Income -->
+      <div class="col-sm-12 col-md-6 mb-3">
+        <label class="form-label"
+          >Annual Income <span class="important-star">*</span></label
+        >
+        <input
+          type="text"
+          pInputText
+          formControlName="annualIncome"
+          class="form-control"
+          placeholder="Enter Annual Income"
+        />
+        <div
+          *ngIf="
+            proffesionalInfo.get('annualIncome')?.invalid &&
+            (proffesionalInfo_submitted ||
+              proffesionalInfo.get('annualIncome')?.touched ||
+              proffesionalInfo.get('annualIncome')?.dirty)
+          "
+          class="error"
+        >
+          <small
+            *ngIf="proffesionalInfo.get('annualIncome')?.errors?.['required']"
+            >Annual Income is required.</small
+          >
+        </div>
+      </div>
+    </div>
   
           <!-- Button row -->
           <div class="d-flex justify-content-end mt-3">

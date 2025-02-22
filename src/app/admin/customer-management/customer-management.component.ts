@@ -63,7 +63,8 @@ export class CustomerManagementComponent {
 
   initValidators() {
     this.personalForm = this.fb.group({
-      fullName: ['', Validators.required],
+      firstName: ['', Validators.required],
+      lastName: ['', Validators.required],
       email: ['', [Validators.required, Validators.email]],
       gender: ['', Validators.required],
       mobileNumber: ['', Validators.required],
@@ -77,10 +78,11 @@ export class CustomerManagementComponent {
     });
 
     this.proffesionalInfo = this.fb.group({
+      employmentType: ['', Validators.required],
       companyName: ['', Validators.required],
       industryType: ['', Validators.required],
       designation: ['', Validators.required],
-      incomePerMonth: ['', Validators.required],
+      annualIncome: ['', Validators.required],
     });
 
     this.KYCDocuments = this.fb.group({

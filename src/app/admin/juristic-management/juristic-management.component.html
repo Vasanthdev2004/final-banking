@@ -176,7 +176,7 @@
         <div class="row">
           <div class="col-sm-12 col-md-6 mb-3">
             <label class="form-label"
-              >Name of Juristic Person
+              >First Name
               <span class="important-star">*</span></label
             >
             <input
@@ -184,7 +184,7 @@
               pInputText
               formControlName="fullName"
               class="form-control"
-              placeholder="Enter your full name"
+              placeholder="Enter your First name"
             />
             <div
               *ngIf="
@@ -195,7 +195,7 @@
               class="error"
             >
               <small *ngIf="personalForm.get('fullName')?.errors?.['required']"
-                >FullName is required.</small
+                >FirstName is required.</small
               >
             </div>
           </div>
@@ -227,7 +227,31 @@
             </div>
           </div>
         </div>
-
+<div class="col-sm-12 col-md-6 mb-3">
+            <label class="form-label"
+              >First Name
+              <span class="important-star">*</span></label
+            >
+            <input
+              type="text"
+              pInputText
+              formControlName="fullName"
+              class="form-control"
+              placeholder="Enter your First name"
+            />
+            <div
+              *ngIf="
+                personalForm.get('fullName')?.invalid &&
+                (personalForm.get('fullName')?.touched ||
+                  personalForm.get('fullName')?.dirty)
+              "
+              class="error"
+            >
+              <small *ngIf="personalForm.get('fullName')?.errors?.['required']"
+                >FirstName is required.</small
+              >
+            </div>
+          </div>
         <div class="row">
           <div class="col-sm-12 col-md-6 mb-3">
             <label class="form-label"

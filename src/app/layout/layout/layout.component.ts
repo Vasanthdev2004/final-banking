@@ -1,5 +1,6 @@
 import { Component } from '@angular/core';
 import { NavigationEnd, Router } from '@angular/router';
+import { HttpClient } from '@angular/common/http';
 
 @Component({
   selector: 'app-layout',
@@ -12,18 +13,20 @@ export class LayoutComponent {
   pageTitle: string = '';
   currentRoute: string = '';
   hideDashboard: boolean = false;
-  constructor(private router: Router) {
+  apiKey: string = 'AIzaSyDiT96oQZTMA1A_sjslixQ0kA89F11ONtQ';
+
+  constructor(private router: Router, private http: HttpClient) {
     this.loginSts = localStorage.getItem("loginStatus");
     if (this.loginSts == 1) {
-
+      // User is logged in
     } else {
       // this.router.navigate(['/login']);
     }
   }
 
-    ngOnInit() {
-      this.getData()
-      this.setPageTitle(this.router.url);
+  ngOnInit() {
+    this.getData();
+    this.setPageTitle(this.router.url);
 
     // Subscribe to router events to update title on navigation
     this.router.events.subscribe((event) => {
@@ -31,7 +34,6 @@ export class LayoutComponent {
         this.setPageTitle(event.urlAfterRedirects);
       }
     });
-    
   }
 
   setPageTitle(url: string) {
@@ -70,32 +72,48 @@ export class LayoutComponent {
         this.pageTitle = 'Banking Application';  // Default for unmatched routes
     }
   }
-  
 
   isActive(route: string): boolean {
     return this.currentRoute === route;
   }
 
+  logout() {
+    localStorage.removeItem("loginStatus");
+    this.router.navigate(['/login']);
+  } 
 
-    logout() {
-      localStorage.removeItem("loginStatus");
-      this.router.navigate(['/login']);
-    } 
+  getData() {
+    this.id = localStorage.getItem('loginId');
+  }
 
-    getData(){
-      this.id =  localStorage.getItem('loginId')
-    }
+  updatePageTitle(newTitle: string) {
+    this.pageTitle = newTitle;
+  }
 
+  isEmail(id: string): boolean {
+    const emailPattern = /^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}$/;
+    return emailPattern.test(id);
+  }
 
+  changeLanguage(event: any) {
+    const selectedLang = event.target.value;
+    document.documentElement.lang = selectedLang;
+    this.translatePage(selectedLang);
+  }
 
-    updatePageTitle(newTitle: string) {
-      this.pageTitle = newTitle;
-    }
+  translatePage(targetLang: string) {
+    const elements = document.querySelectorAll('[translate]');
+    elements.forEach(element => {
+      const text = element.textContent?.trim();
+      if (text) {
+        const url = `https://translation.googleapis.com/language/translate/v2?key=${this.apiKey}&q=${encodeURIComponent(text)}&target=${targetLang}`;
 
-    isEmail(id: string): boolean {
-      const emailPattern = /^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}$/;
-      return emailPattern.test(id);
-    }
-    
-
+        this.http.get<any>(url).subscribe(response => {
+          if (response.data && response.data.translations.length > 0) {
+            element.textContent = response.data.translations[0].translatedText;
+          }
+        });
+      }
+    });
+  }
 }

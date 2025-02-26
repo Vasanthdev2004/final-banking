@@ -140,3 +140,26 @@
   color: #ffffff; /* Ensure the text contrasts with the background */
 }
 
+
+.language-switcher {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  height: 40px;
+}
+
+.language-switcher select {
+  padding: 6px 10px;
+  border-radius: 5px;
+  border: 1px solid #ccc;
+  font-size: 14px;
+  background-color: white;
+  color: black;
+  cursor: pointer;
+}
+
+.menu-icons {
+  display: flex;
+  align-items: center;
+  gap: 15px;
+}

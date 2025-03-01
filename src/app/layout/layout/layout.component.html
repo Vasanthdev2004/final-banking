@@ -75,7 +75,16 @@
   <div class="page-name">
     {{ pageTitle }}
   </div>
+
+  
   <div class="menu-icons">
+
+    <div class="language-switcher">
+      <select (change)="changeLanguage($event)">
+        <option value="en" selected>English</option>
+        <option value="th">ไทย (Thai)</option>
+      </select>      
+    </div>
     <!-- <span>{{ pageTitle }}</span> -->
     <div class="dropdown" style="margin-left: auto">
       <a

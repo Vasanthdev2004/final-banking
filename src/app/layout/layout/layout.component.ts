@@ -1,5 +1,8 @@
 import { Component } from '@angular/core';
 import { NavigationEnd, Router } from '@angular/router';
+import { HttpClient } from '@angular/common/http';
+import { catchError } from 'rxjs/operators';
+import { throwError } from 'rxjs';
 
 @Component({
   selector: 'app-layout',
@@ -12,18 +15,20 @@ export class LayoutComponent {
   pageTitle: string = '';
   currentRoute: string = '';
   hideDashboard: boolean = false;
-  constructor(private router: Router) {
+  apiKey: string = 'AIzaSyDiT96oQZTMA1A_sjslixQ0kA89F11ONtQ';
+
+  constructor(private router: Router, private http: HttpClient) {
     this.loginSts = localStorage.getItem("loginStatus");
     if (this.loginSts == 1) {
-
+      // User is logged in
     } else {
       // this.router.navigate(['/login']);
     }
   }
 
-    ngOnInit() {
-      this.getData()
-      this.setPageTitle(this.router.url);
+  ngOnInit() {
+    this.getData();
+    this.setPageTitle(this.router.url);
 
     // Subscribe to router events to update title on navigation
     this.router.events.subscribe((event) => {
@@ -31,7 +36,6 @@ export class LayoutComponent {
         this.setPageTitle(event.urlAfterRedirects);
       }
     });
-    
   }
 
   setPageTitle(url: string) {
@@ -70,32 +74,78 @@ export class LayoutComponent {
         this.pageTitle = 'Banking Application';  // Default for unmatched routes
     }
   }
-  
 
   isActive(route: string): boolean {
     return this.currentRoute === route;
   }
 
+  logout() {
+    localStorage.removeItem("loginStatus");
+    this.router.navigate(['/login']);
+  } 
 
-    logout() {
-      localStorage.removeItem("loginStatus");
-      this.router.navigate(['/login']);
-    } 
+  getData() {
+    this.id = localStorage.getItem('loginId');
+  }
 
-    getData(){
-      this.id =  localStorage.getItem('loginId')
-    }
+  updatePageTitle(newTitle: string) {
+    this.pageTitle = newTitle;
+  }
 
+  isEmail(id: string): boolean {
+    const emailPattern = /^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}$/;
+    return emailPattern.test(id);
+  }
 
-
-    updatePageTitle(newTitle: string) {
-      this.pageTitle = newTitle;
-    }
-
-    isEmail(id: string): boolean {
-      const emailPattern = /^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}$/;
-      return emailPattern.test(id);
-    }
+  changeLanguage(event: any) {
+    const selectedLang = event.target.value;
+    document.documentElement.lang = selectedLang;
     
+    // ✅ Translate the page and page title
+    this.translateText([this.pageTitle], selectedLang, (translatedTexts) => {
+      if (translatedTexts.length > 0) {
+        this.pageTitle = translatedTexts[0];
+      }
+    });
 
+    this.translatePage(selectedLang);
+  }
+
+  translatePage(targetLang: string) {
+    const elements = document.querySelectorAll('[translate]');
+    let texts: string[] = [];
+
+    elements.forEach(element => {
+      if (element.textContent) {
+        texts.push(element.textContent.trim());
+      }
+    });
+
+    if (texts.length > 0) {
+      this.translateText(texts, targetLang, (translatedTexts) => {
+        elements.forEach((element, index) => {
+          element.textContent = translatedTexts[index] || element.textContent;
+        });
+      });
+    }
+  }
+
+  translateText(texts: string[], targetLang: string, callback: (translatedTexts: string[]) => void) {
+    const url = `https://translation.googleapis.com/language/translate/v2?key=${this.apiKey}`;
+    const body = { q: texts, target: targetLang };
+
+    this.http.post<any>(url, body)
+      .pipe(
+        catchError(error => {
+          console.error("Translation API error:", error);
+          return throwError(error);
+        })
+      )
+      .subscribe(response => {
+        if (response.data && response.data.translations) {
+          callback(response.data.translations.map((t: any) => t.translatedText));
+        }
+      });
+  }
 }
+

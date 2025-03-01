@@ -1,6 +1,8 @@
 import { Component } from '@angular/core';
 import { NavigationEnd, Router } from '@angular/router';
 import { HttpClient } from '@angular/common/http';
+import { catchError } from 'rxjs/operators';
+import { throwError } from 'rxjs';
 
 @Component({
   selector: 'app-layout',
@@ -98,22 +100,52 @@ export class LayoutComponent {
   changeLanguage(event: any) {
     const selectedLang = event.target.value;
     document.documentElement.lang = selectedLang;
+    
+    // ✅ Translate the page and page title
+    this.translateText([this.pageTitle], selectedLang, (translatedTexts) => {
+      if (translatedTexts.length > 0) {
+        this.pageTitle = translatedTexts[0];
+      }
+    });
+
     this.translatePage(selectedLang);
   }
 
   translatePage(targetLang: string) {
     const elements = document.querySelectorAll('[translate]');
-    elements.forEach(element => {
-      const text = element.textContent?.trim();
-      if (text) {
-        const url = `https://translation.googleapis.com/language/translate/v2?key=${this.apiKey}&q=${encodeURIComponent(text)}&target=${targetLang}`;
+    let texts: string[] = [];
 
-        this.http.get<any>(url).subscribe(response => {
-          if (response.data && response.data.translations.length > 0) {
-            element.textContent = response.data.translations[0].translatedText;
-          }
-        });
+    elements.forEach(element => {
+      if (element.textContent) {
+        texts.push(element.textContent.trim());
       }
     });
+
+    if (texts.length > 0) {
+      this.translateText(texts, targetLang, (translatedTexts) => {
+        elements.forEach((element, index) => {
+          element.textContent = translatedTexts[index] || element.textContent;
+        });
+      });
+    }
+  }
+
+  translateText(texts: string[], targetLang: string, callback: (translatedTexts: string[]) => void) {
+    const url = `https://translation.googleapis.com/language/translate/v2?key=${this.apiKey}`;
+    const body = { q: texts, target: targetLang };
+
+    this.http.post<any>(url, body)
+      .pipe(
+        catchError(error => {
+          console.error("Translation API error:", error);
+          return throwError(error);
+        })
+      )
+      .subscribe(response => {
+        if (response.data && response.data.translations) {
+          callback(response.data.translations.map((t: any) => t.translatedText));
+        }
+      });
   }
 }
+

@@ -72,7 +72,8 @@ export class JuristicManagementComponent {
 
   initValidators() {
     this.personalForm = this.fb.group({
-      fullName: ['', Validators.required],
+      firstName: ['', Validators.required],
+      lastName: ['', Validators.required],
       email: ['', [Validators.required, Validators.email]],
       profilePhoto: ['', Validators.required],
       mobileNumber: ['', Validators.required],
@@ -87,15 +88,16 @@ export class JuristicManagementComponent {
     this.proffesionalInfo = this.fb.group({
       companyName: ['', Validators.required],
       industryType: ['', Validators.required],
+      professionalCategory: ['', Validators.required],
       designation: ['', Validators.required],
-      incomePerMonth: ['', Validators.required],
+      annualIncome: ['', Validators.required],
     });
 
     this.KYCDocuments = this.fb.group({
       cardNo: ['', Validators.required],
       citizen_document: ['', Validators.required],
-      passport: ['', Validators.required],
-      passport_upload: ['', Validators.required],
+      nationalid: ['', Validators.required],
+      nationalid_upload: ['', Validators.required],
       household_registration: ['', Validators.required],
       registration_document: ['', Validators.required],
       government_issued: ['', Validators.required],
@@ -195,7 +197,8 @@ export class JuristicManagementComponent {
     let data = {
       records: {
         id: this.selectedCustomer ? this.selectedCustomer.id : '',
-        fullName: this.personalForm.value.fullName,
+        firstName: this.personalForm.value.firstName,
+        lastName: this.personalForm.value.lastName,
         email: this.personalForm.value.email,
         gender: this.personalForm.value.gender,
         mobileNumber: this.personalForm.value.mobileNumber,
@@ -208,12 +211,13 @@ export class JuristicManagementComponent {
         profilePhoto: this.personalForm.value.profilePhoto,
         companyName: this.proffesionalInfo.value.companyName,
         industryType: this.proffesionalInfo.value.industryType,
+        professionalCategory: this.proffesionalInfo.value.professionalCategory,
         designation: this.proffesionalInfo.value.designation,
-        incomePerMonth: this.proffesionalInfo.value.incomePerMonth,
+        annualIncome: this.proffesionalInfo.value.annualIncome,
         cardNo: this.KYCDocuments.value.cardNo,
         citizen_document: this.KYCDocuments.value.citizen_document,
-        passport: this.KYCDocuments.value.passport,
-        passport_upload: this.KYCDocuments.value.passport_upload,
+        nationalid: this.KYCDocuments.value.nationalid,
+        nationalid_upload: this.KYCDocuments.value.nationalid_upload,
         household_registration: this.KYCDocuments.value.household_registration,
         registration_document: this.KYCDocuments.value.registration_document,
         government_issued: this.KYCDocuments.value.government_issued,

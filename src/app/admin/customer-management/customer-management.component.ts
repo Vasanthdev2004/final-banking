@@ -63,7 +63,8 @@ export class CustomerManagementComponent {
 
   initValidators() {
     this.personalForm = this.fb.group({
-      fullName: ['', Validators.required],
+      firstName: ['', Validators.required],
+      lastName: ['', Validators.required],
       email: ['', [Validators.required, Validators.email]],
       gender: ['', Validators.required],
       mobileNumber: ['', Validators.required],
@@ -79,8 +80,9 @@ export class CustomerManagementComponent {
     this.proffesionalInfo = this.fb.group({
       companyName: ['', Validators.required],
       industryType: ['', Validators.required],
+      professionalCategory: ['', Validators.required],
       designation: ['', Validators.required],
-      incomePerMonth: ['', Validators.required],
+      annualIncome: ['', Validators.required],
     });
 
     this.KYCDocuments = this.fb.group({
@@ -209,7 +211,8 @@ export class CustomerManagementComponent {
     let data = {
       records: {
         id: this.selectedCustomer ? this.selectedCustomer.id : '',
-        fullName: this.personalForm.value.fullName,
+        firstName: this.personalForm.value.firstName,
+        lastName: this.personalForm.value.lastName,
         email: this.personalForm.value.email,
         gender: this.personalForm.value.gender,
         mobileNumber: this.personalForm.value.mobileNumber,
@@ -222,8 +225,9 @@ export class CustomerManagementComponent {
         profilePhoto: this.personalForm.value.profilePhoto,
         companyName: this.proffesionalInfo.value.companyName,
         industryType: this.proffesionalInfo.value.industryType,
+        professionalCategory: this.proffesionalInfo.value.professionalCategory,
         designation: this.proffesionalInfo.value.designation,
-        incomePerMonth: this.proffesionalInfo.value.incomePerMonth,
+        annualIncome: this.proffesionalInfo.value.annualIncome,
         cardNo: this.KYCDocuments.value.cardNo,
         citizen_document: this.KYCDocuments.value.citizen_document,
         passport: this.KYCDocuments.value.passport,

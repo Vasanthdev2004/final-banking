@@ -1,7 +1,3 @@
-
-
-
-
 <div class="main-card">
   <div class="card-wrapper">
     <div class="cards">
@@ -33,12 +29,6 @@
     </div>
   </div>
 </div>
-
-
-
-
-
-
 
 
 <div class="m-4" *ngIf="!showForm">
@@ -175,32 +165,38 @@
     <p-tabView [(activeIndex)]="activeIndex">
       <p-tabPanel header="Personal Information">
         <h6 class="text-left">Personal Information</h6>
-        <form [formGroup]="personalForm">
-          <div class="row">
-            <div class="col-sm-12 col-md-6 mb-3">
-              <label class="form-label"
-                >Full Name <span class="important-star">*</span></label
-              >
-              <input
-                type="text"
-                pInputText
-                formControlName="fullName"
-                class="form-control"
-                placeholder="Enter your full name"
-              />
-              <div
-                *ngIf="
-                  personalForm.get('fullName')?.invalid &&
-                  (personalForm.get('fullName')?.touched ||
-                    personalForm.get('fullName')?.dirty)
-                "
-                class="error"
-              >
-                <small *ngIf="personalForm.get('fullName')?.errors?.['required']"
-                  >FullName is required.</small
-                >
-              </div>
-            </div>
+<form [formGroup]="personalForm">
+  <div class="row">
+    <!-- First Name -->
+    <div class="col-sm-12 col-md-6 mb-3">
+      <label class="form-label">First Name <span class="important-star">*</span></label>
+      <input
+        type="text"
+        pInputText
+        formControlName="firstName"
+        class="form-control"
+        placeholder="Enter your first name"
+      />
+      <div *ngIf="personalForm.get('firstName')?.invalid && (personalForm.get('firstName')?.touched || personalForm.get('firstName')?.dirty)" class="error">
+        <small *ngIf="personalForm.get('firstName')?.errors?.['required']">First Name is required.</small>
+      </div>
+    </div>
+
+    <!-- Last Name -->
+    <div class="col-sm-12 col-md-6 mb-3">
+      <label class="form-label">Last Name <span class="important-star">*</span></label>
+      <input
+        type="text"
+        pInputText
+        formControlName="lastName"
+        class="form-control"
+        placeholder="Enter your last name"
+      />
+      <div *ngIf="personalForm.get('lastName')?.invalid && (personalForm.get('lastName')?.touched || personalForm.get('lastName')?.dirty)" class="error">
+        <small *ngIf="personalForm.get('lastName')?.errors?.['required']">Last Name is required.</small>
+      </div>
+    </div>
+    <div class="row">
             <div class="col-sm-12 col-md-6 mb-3">
               <label class="form-label"
                 >Email ID <span class="important-star">*</span></label
@@ -228,8 +224,6 @@
                 >
               </div>
             </div>
-          </div>
-          <div class="row">
             <div class="col-sm-12 col-md-6 mb-3">
               <label class="form-label"
                 >Gender <span class="important-star">*</span></label
@@ -272,6 +266,8 @@
                 >
               </div>
             </div>
+            </div>
+              <div class="row">
             <div class="col-sm-12 col-md-6 mb-3">
               <label class="form-label"
                 >Mobile Number <span class="important-star">*</span></label
@@ -312,8 +308,6 @@
                 >
               </div>
             </div>
-          </div>
-          <div class="row">
             <div class="col-sm-12 col-md-6 mb2">
               <label class="form-label"
                 >Date of Birth <span class="important-star">*</span></label
@@ -345,10 +339,13 @@
               >
                 <small
                   *ngIf="personalForm.get('dateOfBirth')?.errors?.['required']"
-                  >DateOfBirth is required.</small
+                  >Date Of Birth is required.</small
                 >
               </div>
             </div>
+            </div>
+
+            <div class="row">
             <div class="col-sm-12 col-md-6 mb-3">
               <label class="form-label"
                 >Street Address <span class="important-star">*</span></label
@@ -379,10 +376,8 @@
                 >
               </div>
             </div>
-          </div>
-          <div class="row">
             <div class="col-sm-12 col-md-6 mb-3">
-              <label class="form-label">Street Address Line 2</label>
+              <label class="form-label"> Street Address Line 2 </label>
               <input
                 type="text"
                 pInputText
@@ -391,6 +386,9 @@
                 placeholder="Apartment, suite, etc. (optional)"
               />
             </div>
+            </div>
+
+            <div class="row">
             <div class="col-sm-12 col-md-6 mb-3">
               <label class="form-label"
                 >State/Province <span class="important-star">*</span></label
@@ -417,8 +415,6 @@
                 <!-- <small *ngIf="personalForm.get('state')?.errors?.['state']">Invalid State.</small> -->
               </div>
             </div>
-          </div>
-          <div class="row">
             <div class="col-sm-12 col-md-6 mb-3">
               <label class="form-label"
                 >City <span class="important-star">*</span></label
@@ -444,6 +440,9 @@
                 >
               </div>
             </div>
+            </div>
+
+            <div class="row">
             <div class="col-sm-12 col-md-6 mb-3">
               <label class="form-label"
                 >Postal/Zip Code <span class="important-star">*</span></label
@@ -469,12 +468,9 @@
                   >PostalCode is required.</small
                 >
               </div>
-            </div>
-          </div>
-  
-          <div class="row"></div>
-          <div class="col-sm-12 col-md- mb-3">
-            <label class="form-label"
+              </div>
+              <div class="col-sm-12 col-md-6 mb-3">
+                <label class="form-label"
               >Profile Photo <span class="important-star">*</span></label
             >
             <div
@@ -514,6 +510,8 @@
                 >profilePhoto is required.</small
               >
             </div>
+          </div>
+          </div>
           </div>
   
           <!-- Button row -->
@@ -559,21 +557,18 @@
               >
                 <small
                   *ngIf="proffesionalInfo.get('companyName')?.errors?.['required']"
-                  >companyName is required.</small
+                  >Company Name is required.</small
                 >
               </div>
             </div>
           </div>
+          
           <div class="col-sm-12 col-md-12 mb-3">
             <label class="form-label"
               >Industry Type <span class="important-star">*</span></label
             >
-  
-            <select
-              pInputText
-              formControlName="industryType"
-              class="form-control"
-            >
+          
+            <select formControlName="industryType" class="form-control">
               <option value="">-- Select Industry Type --</option>
               <option value="IT">Information Technology (IT)</option>
               <option value="Healthcare">Healthcare</option>
@@ -598,7 +593,40 @@
               >
             </div>
           </div>
-  
+          
+          <!-- New Professional Category Field -->
+          <div class="col-sm-12 col-md-12 mb-3">
+            <label class="form-label"
+              >Professional Category <span class="important-star">*</span></label
+            >
+          
+            <select formControlName="professionalCategory" class="form-control">
+              <option value="">-- Select Professional Category --</option>
+              <option value="Employee">Employee</option>
+              <option value="Self-Employed">Self-Employed</option>
+              <option value="Freelancer">Freelancer</option>
+              <option value="Business Owner">Business Owner</option>
+              <option value="Retired">Retired</option>
+              <option value="Other">Other</option>
+            </select>
+            <div
+              *ngIf="
+                proffesionalInfo.get('professionalCategory')?.invalid &&
+                (proffesionalInfo_submitted ||
+                  proffesionalInfo.get('professionalCategory')?.dirty ||
+                  proffesionalInfo.get('professionalCategory')?.touched)
+              "
+              class="error"
+            >
+              <small
+                *ngIf="
+                  proffesionalInfo.get('professionalCategory')?.errors?.['required']
+                "
+                >Professional Category is required.</small
+              >
+            </div>
+          </div>
+          
           <div class="row">
             <div class="col-sm-12 col-md-6 mb-3">
               <label class="form-label"
@@ -622,33 +650,33 @@
               >
                 <small
                   *ngIf="proffesionalInfo.get('designation')?.errors?.['required']"
-                  >designation is required.</small
+                  >Designation is required.</small
                 >
               </div>
             </div>
             <div class="col-sm-12 col-md-6 mb-3">
               <label class="form-label"
-                >Income Per Month <span class="important-star">*</span></label
+                >Annual Income<span class="important-star">*</span></label
               >
               <input
                 type="text"
                 pInputText
-                formControlName="incomePerMonth"
+                formControlName="annualIncome"
                 class="form-control"
                 placeholder="Enter Income"
               />
               <div
                 *ngIf="
-                  proffesionalInfo.get('incomePerMonth')?.invalid &&
+                  proffesionalInfo.get('annualIncome')?.invalid &&
                   (proffesionalInfo_submitted ||
-                    proffesionalInfo.get('incomePerMonth')?.touched ||
-                    proffesionalInfo.get('incomePerMonth')?.dirty)
+                    proffesionalInfo.get('annualIncome')?.touched ||
+                    proffesionalInfo.get('annualIncome')?.dirty)
                 "
                 class="error"
               >
                 <small
-                  *ngIf="proffesionalInfo.get('incomePerMonth')?.errors?.['required']"
-                  >IncomePerMonth is required.</small
+                  *ngIf="proffesionalInfo.get('annualIncome')?.errors?.['required']"
+                  >Income Per Month is required.</small
                 >
               </div>
             </div>

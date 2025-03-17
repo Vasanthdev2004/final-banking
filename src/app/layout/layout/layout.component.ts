@@ -10,18 +10,17 @@ import { throwError } from 'rxjs';
   styleUrl: './layout.component.scss'
 })
 export class LayoutComponent {
-  id = '0'
+  id = '0';
   loginSts: any;
   pageTitle: string = '';
   currentRoute: string = '';
   hideDashboard: boolean = false;
   apiKey: string = 'AIzaSyDiT96oQZTMA1A_sjslixQ0kA89F11ONtQ';
+  originalTexts: { [key: string]: string } = {};
 
   constructor(private router: Router, private http: HttpClient) {
     this.loginSts = localStorage.getItem("loginStatus");
-    if (this.loginSts == 1) {
-      // User is logged in
-    } else {
+    if (this.loginSts != 1) {
       // this.router.navigate(['/login']);
     }
   }
@@ -29,14 +28,18 @@ export class LayoutComponent {
   ngOnInit() {
     this.getData();
     this.setPageTitle(this.router.url);
-
+  
     // Subscribe to router events to update title on navigation
     this.router.events.subscribe((event) => {
       if (event instanceof NavigationEnd) {
         this.setPageTitle(event.urlAfterRedirects);
       }
     });
+  
+    // ✅ Store original text after a short delay to ensure elements are rendered
+    setTimeout(() => this.storeOriginalText(), 500);
   }
+  
 
   setPageTitle(url: string) {
     switch (url) {
@@ -68,10 +71,10 @@ export class LayoutComponent {
         this.pageTitle = 'Customer Details';
         break;
       case '/':
-        this.pageTitle = 'Welcome';  // Default for home or root page
+        this.pageTitle = 'Welcome';  
         break;
       default:
-        this.pageTitle = 'Banking Application';  // Default for unmatched routes
+        this.pageTitle = 'Banking Application';  
     }
   }
 
@@ -97,20 +100,41 @@ export class LayoutComponent {
     return emailPattern.test(id);
   }
 
+  /** ✅ Store original English text */
+  storeOriginalText() {
+    const elements = document.querySelectorAll('[translate]');
+    elements.forEach(element => {
+      const el = element as HTMLElement;
+      if (!el.dataset.original) {
+        el.dataset.original = el.innerHTML.trim();
+      }
+    });
+  }
+
+  /** ✅ Translate only when Thai is selected */
   changeLanguage(event: any) {
     const selectedLang = event.target.value;
     document.documentElement.lang = selectedLang;
-    
-    // ✅ Translate the page and page title
-    this.translateText([this.pageTitle], selectedLang, (translatedTexts) => {
-      if (translatedTexts.length > 0) {
-        this.pageTitle = translatedTexts[0];
-      }
-    });
 
-    this.translatePage(selectedLang);
+    if (selectedLang === 'th') {
+      this.translatePage(selectedLang);
+    } else {
+      this.restoreOriginalText();
+    }
   }
 
+  /** ✅ Restore original English text when switching back */
+  restoreOriginalText() {
+    const elements = document.querySelectorAll('[translate]');
+    elements.forEach(element => {
+      const el = element as HTMLElement;
+      if (el.dataset.original) {
+        el.innerHTML = el.dataset.original;
+      }
+    });
+  }
+
+  /** ✅ Translate content when switching to Thai */
   translatePage(targetLang: string) {
     const elements = document.querySelectorAll('[translate]');
     let texts: string[] = [];
@@ -124,7 +148,7 @@ export class LayoutComponent {
     if (texts.length > 0) {
       this.translateText(texts, targetLang, (translatedTexts) => {
         elements.forEach((element, index) => {
-          element.textContent = translatedTexts[index] || element.textContent;
+          element.innerHTML = translatedTexts[index] || element.innerHTML;
         });
       });
     }
@@ -148,4 +172,3 @@ export class LayoutComponent {
       });
   }
 }
-
